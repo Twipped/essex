@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "@twipped/eslint-config/node-cjs"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": "**.jsx",
+      "extends": [
+        "@twipped/eslint-config/react"
+      ]
+    }
+  ]
+}

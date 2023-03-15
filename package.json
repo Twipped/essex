@@ -1,0 +1,56 @@
+{
+  "name": "essex",
+  "version": "0.0.0",
+  "description": "A JSX template engine",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src __tests__",
+    "test": "tap",
+    "snap": "tap",
+    "cover": "c8 -r html tap && open-cli ./coverage/index.html",
+    "watch": "tap --watch --coverage",
+    "pretest": "npm run pretest:jsx && npm run pretest:mdx",
+    "pretest:jsx": "babel ./__tests__/fixtures/*.jsx --config-file ./__tests__/babel.config.js --extensions .jsx --out-dir ./__tests__/fixtures --out-file-extension .cjs",
+    "pretest:mdx": "babel ./__tests__/fixtures/*.mdx --config-file ./__tests__/babel.config.js --extensions .mdx --out-dir ./__tests__/fixtures --out-file-extension .cjs"
+  },
+  "keywords": [],
+  "author": "Jocelyn Badgley <joc@twipped.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Twipped/essex"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.16.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.3",
+    "@babel/parser": "^7.21.3",
+    "@mdx-js/mdx": "^2.3.0",
+    "@twipped/eslint-config": "^7.5.2",
+    "c8": "^7.13.0",
+    "eslint": "^8.36.0",
+    "estree-to-babel": "^5.0.1",
+    "open-cli": "^7.1.0",
+    "tap": "^16.3.4",
+    "test": "^3.3.0"
+  },
+  "dependencies": {
+    "@twipped/utils": "^7.1.0",
+    "create-html-element": "^4.0.1",
+    "escape-goat": "^4.0.0",
+    "html-element-attributes": "^3.1.0",
+    "pretty-format": "^29.5.0",
+    "property-information": "^6.2.0"
+  },
+  "tap": {
+    "coverage": false,
+    "check-coverage": false,
+    "coverage-report": [
+      "json"
+    ],
+    "reporter": "spec",
+    "test-regex": "\\.test.m?js$"
+  }
+}
