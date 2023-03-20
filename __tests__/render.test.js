@@ -1,6 +1,6 @@
 const { test } = require('tap');
 const { mock } = require('test');
-const { render, jsx, Fragment } = require('../src/index');
+const { render, jsx, Fragment } = require('..');
 const { formatTestTitle } = require('./harness.cjs');
 const fixtures = require('./fixtures/components.cjs');
 const Markdown = require('./fixtures/markdown.cjs').default;
