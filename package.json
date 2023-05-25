@@ -42,10 +42,12 @@
     "test": "^3.3.0"
   },
   "dependencies": {
+    "@immutabl3/to-style": "^2.2.0",
     "@twipped/utils": "^7.1.0",
     "create-html-element": "^4.0.1",
     "escape-goat": "^4.0.0",
     "html-element-attributes": "^3.1.0",
+    "inline-style": "^2.0.0",
     "pretty-format": "^29.5.0",
     "property-information": "^6.2.0"
   },

@@ -3,6 +3,10 @@ import { htmlEscape } from 'escape-goat';
 import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
 import { htmlElementAttributes } from 'html-element-attributes';
 import { isString, isObject } from '@twipped/utils/types';
+import toStyle from '@immutabl3/to-style';
+import inlineStyle from 'inline-style';
+
+const styler = toStyle.create({ transform3d: false });
 
 export default function renderTag (type, props, html, withContext) {
 
@@ -10,7 +14,7 @@ export default function renderTag (type, props, html, withContext) {
   for (const k of Object.keys(props)) {
     if (k === 'children') continue;
     if (k === 'style' && isObject(props[k])) {
-      withContext.warn(`essex cannot currently handle serialization of css styles. The style attribute has been omitted.`);
+      attributes.style = inlineStyle(styler(props[k]));
       continue;
     }
 
