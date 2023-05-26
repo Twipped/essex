@@ -73,10 +73,7 @@ const table = [
   {
     name: 'radiobutton',
     input: jsx('div', { style: { fontWeight: 'bold' } }),
-    expected: '<div></div>',
-    warnings: [
-      "essex cannot currently handle serialization of css styles. The style attribute has been omitted.",
-    ],
+    expected: "<div style=\"font-weight:bold\"></div>",
   },
 ];
 
