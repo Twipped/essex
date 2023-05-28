@@ -47,8 +47,8 @@ function validateAttribute (tag, attribute, value, withContext) {
   const okayForTag = (
     definition.attribute.startsWith('data-')
     || definition.attribute.startsWith('aria-')
-    || htmlElementAttributes[tag].includes(definition.attribute)
-    || htmlElementAttributes['*'].includes(definition.attribute)
+    || htmlElementAttributes[tag]?.includes?.(definition.attribute)
+    || htmlElementAttributes['*']?.includes?.(definition.attribute)
   );
 
   if (!definition.space) {
@@ -75,6 +75,11 @@ function validateAttribute (tag, attribute, value, withContext) {
   }
 
   if (value === null || value === undefined) {
+    formatted = false;
+  }
+
+  // empty classnames should be excluded
+  if (definition.attribute === 'class' && !formatted) {
     formatted = false;
   }
 

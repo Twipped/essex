@@ -53,6 +53,31 @@ const table = [
     expected: '<span>0</span>',
   },
   {
+    name: 'class prop as string',
+    input: jsx('span', { class: 'foo' }),
+    expected: '<span class="foo"></span>',
+  },
+  {
+    name: 'className prop as string',
+    input: jsx('span', { className: 'foo' }),
+    expected: '<span class="foo"></span>',
+  },
+  {
+    name: 'class prop as array',
+    input: jsx('span', { class: [ 'foo', [ 'bar' ] ] }),
+    expected: '<span class="foo bar"></span>',
+  },
+  {
+    name: 'className prop as array',
+    input: jsx('span', { className: [ 'foo', [ 0 ] ] }),
+    expected: '<span class="foo 0"></span>',
+  },
+  {
+    name: 'className prop as empty array',
+    input: jsx('span', { className: [] }),
+    expected: '<span></span>',
+  },
+  {
     name: '<input type="radio" checked>',
     input: jsx('input', { type: 'radio', checked: true }),
     expected: '<input type="radio" checked>',
