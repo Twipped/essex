@@ -4,7 +4,7 @@ const render = require('./render');
 const {
   FRAGMENT: Fragment,
   CONTEXT: ContextProvider,
-  RAW: Raw,
+  RAW: RawHtml,
 } = require('./symbols');
 const { jsx, createElement } = require('./jsx-runtime');
 const { Element, cloneElement } = require('./element');
@@ -22,4 +22,4 @@ exports.Fragment = Fragment;
 exports.ContextProvider = ContextProvider;
 exports.Context = Context;
 exports.Element = Element;
-exports.Raw = Raw;
+exports.RawHtml = RawHtml;
