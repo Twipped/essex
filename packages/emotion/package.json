@@ -1,0 +1,49 @@
+{
+  "name": "essex-emotion",
+  "version": "0.0.0",
+  "description": "Emotion CSS styled components extension for the Essex template engine",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "test": "node --test",
+    "cover": "c8 -r html node --test && open-cli ./coverage/index.html"
+  },
+  "keywords": [],
+  "author": "Jocelyn Badgley <joc@twipped.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Twipped/essex"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.16.0"
+  },
+  "files": [
+    "src",
+    "LICENSE.txt",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@twipped/eslint-config": "^8.0.0",
+    "@twipped/festival": "^0.1.0",
+    "c8": "^7.13.0",
+    "eslint": "^8.56.0",
+    "essex": "*"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/serialize": "^1.1.2"
+  },
+  "peerDependencies": {
+    "essex": "^0.2.0"
+  },
+  "tap": {
+    "coverage": false,
+    "check-coverage": false,
+    "coverage-report": [
+      "json"
+    ],
+    "reporter": "spec",
+    "test-regex": "\\.test.m?js$"
+  }
+}

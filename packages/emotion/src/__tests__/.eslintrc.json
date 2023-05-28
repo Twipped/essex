@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "@twipped/eslint-config/react",
+    "@twipped/eslint-config/test-node"
+  ],
+  "overrides": [
+    {
+      "files": "*.mjs",
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "rules": {
+        "import/extensions": ["error", "ignorePackages", {
+          "js": "always",
+          "mjs": "always",
+          "jsx": "always"
+        }],
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
+}
