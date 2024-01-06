@@ -1,6 +1,12 @@
 
-exports.CONTEXT = Symbol('Context');
+exports.CONTEXT = Symbol.for('essex.context');
 
-exports.FRAGMENT = Symbol('Fragment');
+exports.FRAGMENT = Symbol.for('essex.fragment');
 
-exports.RAW = Symbol('Raw Content');
+exports.RAW = Symbol.for('essex.raw');
+
+exports.DEFER = Symbol.for('essex.defer');
+
+exports.PRIORITY = Symbol.for('essex.priority');
+
+exports.EXCLUDE = Symbol.for('essex.exclude');

@@ -2,7 +2,7 @@ import createHtmlElement from 'create-html-element';
 import { htmlEscape } from 'escape-goat';
 import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
 import { htmlElementAttributes } from 'html-element-attributes';
-import { isString, isObject } from '@twipped/utils/types';
+import { isString, isObject, isUndefinedOrNull } from '@twipped/utils/types';
 import toStyle from '@immutabl3/to-style';
 import inlineStyle from 'inline-style';
 
@@ -12,14 +12,14 @@ export default function renderTag (type, props, html, withContext) {
 
   const attributes = {};
   for (const k of Object.keys(props)) {
+    let v = props[k];
+    if (isUndefinedOrNull(props[k])) continue;
     if (k === 'children') continue;
-    if (k === 'style' && isObject(props[k])) {
-      attributes.style = inlineStyle(styler(props[k]));
-      continue;
+    if (k === 'style' && isObject(v)) {
+      v = inlineStyle(styler(props[k]));
     }
 
-    const { attribute, value } = validateAttribute(type, k, props[k], withContext);
-
+    const { attribute, value } = validateAttribute(type, k, v, withContext);
     attributes[attribute] = value;
   }
 
@@ -56,7 +56,6 @@ function validateAttribute (tag, attribute, value, withContext) {
   } else if (!okayForTag) {
     withContext.warn(`The "${attribute}" attribute is not typically used with <${tag}>.`);
   }
-
   let formatted = htmlEscape(value);
   if (definition.boolean) {
     formatted = !!value;
@@ -64,13 +63,16 @@ function validateAttribute (tag, attribute, value, withContext) {
     formatted = value ? 'true' : 'false';
   } else if (definition.overloadedBoolean) {
     formatted = isString(value) ? htmlEscape(value) : value;
+  } else if (typeof value === 'number') {
+    formatted = String(value);
   }
 
   if (Array.isArray(value)) {
+    formatted = value.flat(Infinity).map((s) => (s || s === 0) && String(s).trim()).filter(Boolean);
     if (definition.spaceSeparated) {
-      formatted = value.flat(Infinity).join(' ');
+      formatted = formatted.join(' ');
     } else if (definition.commaSeparated || definition.commaOrSpaceSeparated) {
-      formatted = value.flat(Infinity).join(',');
+      formatted = formatted.join(',');
     }
   }
 

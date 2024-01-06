@@ -8,5 +8,17 @@
   "license": "MIT",
   "workspaces": [
     "./packages/*"
-  ]
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present"
+  },
+  "tap": {
+    "coverage": false,
+    "check-coverage": false,
+    "coverage-report": [
+      "json"
+    ],
+    "reporter": "spec",
+    "test-regex": "\\.test.m?js$"
+  }
 }

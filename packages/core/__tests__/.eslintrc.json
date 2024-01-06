@@ -12,7 +12,7 @@
   },
   "overrides": [
     {
-      "files": "**.jsx",
+      "files": "**/**.jsx",
       "extends": [
         "@twipped/eslint-config/react"
       ]

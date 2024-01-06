@@ -28,6 +28,6 @@ test('transforms JSX code correctly via babel', async (t) => {
     ],
   });
 
-  t.snapshotFile = path.resolve(__dirname, '__snapshots__', 'components.jsx.snap.cjs');
+  t.snapshotFile = path.resolve(__dirname, '__snapshots__', 'babel.snap.cjs');
   t.matchSnapshot(result.code, 'fixture');
 });

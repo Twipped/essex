@@ -16,8 +16,9 @@ import { format } from 'pretty-format';
 import renderTag from './renderTag.mjs';
 
 import { Element } from './element.js';
-import { CONTEXT, FRAGMENT, RAW } from './symbols.js';
+import { CONTEXT, DEFER, EXCLUDE, FRAGMENT, PRIORITY, RAW } from './symbols.js';
 import { Context } from './context.js';
+import { Envelope } from './utils.js';
 
 export default async function render (element, withContext = new Context(), extendProps) {
   if (isFunction(element)) {
@@ -36,10 +37,12 @@ export default async function render (element, withContext = new Context(), exte
     return withContext.error(`essex.render() may only accept an essex Element or a function as its first argument.\nReceived ${format(element)}`);
   }
 
+  const isSymbolTag = [ CONTEXT, FRAGMENT, RAW ].includes(element.type);
+
   if (!element.type || (
     !isString(element.type)
     && !isFunction(element.type)
-    && ![ CONTEXT, FRAGMENT, RAW ].includes(element.type)
+    && !isSymbolTag
   )) {
     return withContext.error(`essex.render() received an element of an unknown type: ${format(element.type)}`);
   }
@@ -52,33 +55,30 @@ export default async function render (element, withContext = new Context(), exte
     lineNumber,
     columnNumber,
   } = element;
+  // console.log({ name: withContext.name, depth: withContext.depth });
 
   if (type instanceof Element) {
     return render(type, withContext, props);
   }
 
+  const shouldExclude = type[EXCLUDE] || props?.[EXCLUDE];
   if (extendProps) props = { ...props, extendProps };
 
+  // console.log({ name, shouldExclude, props });
   withContext = withContext.shard({
     name,
+    isSymbolTag,
+    shouldExclude,
     fileName,
     lineNumber,
     columnNumber,
   });
 
   if (isFunction(type)) {
-    const branch = await invoke(type, props, withContext);
-    if (Array.isArray(branch)) {
-      return render(new Element(FRAGMENT, { children: branch }));
+    if (type[DEFER]) {
+      return renderDeferredComponent({ type, name, props, withContext });
     }
-
-    if (branch === null || isString(branch)) return branch;
-
-    if (branch instanceof Element) {
-      return render(branch, withContext);
-    }
-
-    return withContext.error(`The "${name}" component returned an unsupported value: ${format(branch)}`);
+    return renderComponent({ type, name, props, withContext });
   }
 
   if (type === CONTEXT) {
@@ -111,6 +111,27 @@ export default async function render (element, withContext = new Context(), exte
   return withContext.error(`Unknown tag type: "${format(type)}"`);
 }
 
+async function renderComponent ({ type, name, props, withContext }) {
+  const branch = await invoke(type, props, withContext);
+  if (Array.isArray(branch)) {
+    return render(new Element({ type: FRAGMENT, props: { children: branch } }), withContext);
+  }
+
+  if (branch === null || isString(branch)) return branch;
+
+  if (branch instanceof Element) {
+    return render(branch, withContext);
+  }
+
+  return withContext.error(`The "${name}" component returned an unsupported value: ${format(branch)}`);
+}
+
+async function renderDeferredComponent ({ type, name, props: { children, ...props }, withContext }) {
+  const prerendered = await renderChildren(children, withContext);
+  const newChildren = new Element({ type: RAW, props: { children: prerendered } });
+
+  return renderComponent({ type, name, props: { children: newChildren, ...props }, withContext });
+}
 
 async function renderChildren (children, withContext) {
   if (!sizeOf(children) && children !== 0) return '';
@@ -118,7 +139,57 @@ async function renderChildren (children, withContext) {
   if (!Array.isArray(children)) children = [ children ];
   else if (!children?.length) return '';
 
-  const leaves = await pMap(children.flat(Infinity), (child) => renderChild(child, withContext));
+  children = children.flat(Infinity);
+
+  const groups = new Map();
+  let leaves = [];
+  // separate children into execution groups by priority and
+  // push promises of each child's result into a collection
+  // that matches the sibling order.
+  for (const child of children) {
+    const priority = Number(child[PRIORITY] || child.props?.[PRIORITY] || 0);
+    const e = new Envelope();
+    const r = async () => e.resolve(await renderChild(child, withContext));
+    const group = groups.get(priority) || (() => {
+      const g = [];
+      groups.set(priority, g);
+      return g;
+    })();
+    group.push(r);
+    leaves.push(e.promise);
+  }
+  // now execute each priority group in order, highest priority first
+  const groupKeys = Array.from(groups.keys()).sort().reverse();
+  for (const k of groupKeys) {
+    await pMap(groups.get(k), (r) => r());
+  }
+
+
+  // const pending = new Envelope();
+  // let chain = pending.promise;
+  // let leaves = [];
+  // const immediate = [];
+  // const deferred = [];
+  // for (const child of children) {
+  //   const isDeferredSibling = child[DEFER] || child.props?.[DEFER];
+  //   if (isDeferredSibling) {
+  //     chain = chain.then(() => renderChild(child, withContext));
+  //     leaves.push(chain);
+  //     deferred.push(chain);
+  //     continue;
+  //   }
+
+  //   const p = renderChild(child, withContext);
+  //   leaves.push(p);
+  //   immediate.push(p);
+  // }
+  // if (deferred.length) {
+  //   await Promise.all(immediate);
+  //   pending.resolve();
+  // }
+
+  // all children should now be resolved.
+  leaves = await Promise.all(leaves);
 
   return leaves.flat(Infinity).filter(Boolean).join('');
 }
@@ -147,7 +218,7 @@ function invoke (fn, props, withContext) {
     return fn.call(withContext, props);
   } catch (error) {
     const e = {}; Error.captureStackTrace(e);
-    const cstack = withContext.getCallStack();
+    const cstack = withContext.getThrowStack();
     const control = `${e.stack}\n`.split('\n');
     const stack = `${error.stack}\n`.split("\n");
 

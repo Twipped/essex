@@ -1,5 +1,4 @@
-const { isFunction, isString } = require('@twipped/utils/types');
-const { FRAGMENT } = require('./symbols');
+const { getComponentName } = require('./utils');
 
 class Element {
   /**
@@ -20,13 +19,7 @@ class Element {
   get name () {
     return (
       this.displayName
-      || (isFunction(this.type) && (this.type.displayName || this.type.name))
-      || (isString(this.type) && this.type)
-      || this.displayName
-      || (this.type === 'CONTEXT' && 'ContextProvider')
-      || ((!this.type || this.type === FRAGMENT) && 'Fragment')
-      || this.constructor.name
-      || 'Anonymous'
+      || getComponentName(this.type, this)
     );
   }
 

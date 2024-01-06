@@ -14,7 +14,7 @@ function createContext (name = 'Unnamed', scope = Symbol(name)) {
       },
       key,
     });
-    el.name = undefined;
+    el.name = `${name}.Provider`;
     return el;
   }
   Provider.displayName = `${name}.Provider`;
@@ -32,24 +32,25 @@ class Context {
   fileName = false;
   lineNumber = false;
   columnNumber = false;
+  depth = 0;
 
   constructor (config) {
     Object.assign(this, config);
   }
 
   warn (message) {
-    warn(`${message}\n${this.getCallStack()}`);
+    warn(`${message}\n${this.getThrowStack()}`);
   }
 
   error (message) {
     const e = new Error(message);
     e._originalStack = e.stack;
-    e.stack = `${e.message}\n${this.getCallStack()}`.trim();
+    e.stack = `${e.message}\n${this.getThrowStack()}`.trim();
     throw e;
   }
 
-  shard (wrap) {
-    const layer = {};
+  shard (wrap = {}) {
+    const layer = { depth: this.depth + 1 };
     if (wrap.name === 'svg') {
       layer.space = 'svg';
     } else if (wrap.name === 'xml') {
@@ -68,7 +69,7 @@ class Context {
     return this[symbol];
   }
 
-  getCallStack () {
+  getThrowStack () {
     return Array.from(prototypeParents(this),
       ({ name, fileName = false, lineNumber = false, columnNumber = false }) => {
         if (!name) return null;
@@ -76,6 +77,25 @@ class Context {
         return `    in <${name}> (${fileName}:${lineNumber}:${columnNumber})`;
       }
     ).filter(Boolean).join('\n');
+  }
+
+  getCallStack () {
+    const stack = Array.from(prototypeParents(this),
+      ({
+        isSymbolTag,
+        shouldExclude,
+        name,
+        fileName = false,
+        lineNumber = false,
+        columnNumber = false,
+      }) => {
+        if (!name || isSymbolTag || shouldExclude) return null;
+        if (fileName === false) return `<${name}>`;
+        return `<${name}> (${fileName}:${lineNumber}:${columnNumber})`;
+      }
+    ).filter(Boolean);
+    stack.reverse();
+    return stack;
   }
 }
 
