@@ -11,7 +11,7 @@
       }
     },
     {
-      "files": "*.mjs",
+      "files": ["*.mjs"],
       "parserOptions": {
         "sourceType": "module"
       },
@@ -33,6 +33,14 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "*.jsx"
+      ],
+      "extends": [
+        "@twipped/eslint-config/react"
+      ]
     }
   ]
 }

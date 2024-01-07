@@ -3,10 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
-var _jsxDevRuntime = require("../../jsx-dev-runtime");
+exports["default"] = MDXContent;
+var _jsxDevRuntime = require("essex/jsx-dev-runtime");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _createMdxContent(props) {
-  const _components = Object.assign({
+  var _components = _objectSpread({
     em: "em",
     h1: "h1"
   }, props.components);
@@ -60,17 +65,15 @@ function _createMdxContent(props) {
     columnNumber: 1
   }, this);
 }
-function MDXContent(props = {}) {
-  const {
-    wrapper: MDXLayout
-  } = props.components || {};
-  return MDXLayout ? (0, _jsxDevRuntime.jsxDEV)(MDXLayout, Object.assign({}, props, {
-    children: (0, _jsxDevRuntime.jsxDEV)(_createMdxContent, props, undefined, false, {
+function MDXContent() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _ref = props.components || {},
+    MDXLayout = _ref.wrapper;
+  return MDXLayout ? (0, _jsxDevRuntime.jsxDEV)(MDXLayout, _objectSpread(_objectSpread({}, props), {}, {
+    children: (0, _jsxDevRuntime.jsxDEV)(_createMdxContent, _objectSpread({}, props), undefined, false, {
       fileName: "/Users/twipped/Projects/jayessex/packages/core/__tests__/fixtures/markdown.mdx"
     }, this)
   }), undefined, false, {
     fileName: "/Users/twipped/Projects/jayessex/packages/core/__tests__/fixtures/markdown.mdx"
   }, this) : _createMdxContent(props);
 }
-var _default = exports.default = MDXContent;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfanN4RGV2UnVudGltZSIsImpzeERFViIsIkZyYWdtZW50IiwiY2hpbGRyZW4iLCJfY29tcG9uZW50cyIsImVtIiwidW5kZWZpbmVkIiwiZmlsZU5hbWUiLCJsaW5lTnVtYmVyIiwiY29sdW1uTnVtYmVyIiwiaDEiLCJNRFhDb250ZW50IiwicHJvcHMiLCJ3cmFwcGVyIiwiTURYTGF5b3V0IiwiY29tcG9uZW50cyIsIk9iamVjdCIsImFzc2lnbiIsIl9jcmVhdGVNZHhDb250ZW50IiwiX2RlZmF1bHQiLCJleHBvcnRzIiwiZGVmYXVsdCJdLCJzb3VyY2VzIjpbIm1hcmtkb3duLm1keCJdLCJzb3VyY2VzQ29udGVudCI6WyI8ZGl2PipoaSo/PC9kaXY+XG5cbjxkaXY+XG4gICMgaGVsbG8/XG48L2Rpdj5cblxuPG1haW4+XG4gIDxkaXY+XG5cbiAgICAjIGhvdyBhcmUgeW91P1xuXG4gIDwvZGl2PlxuPC9tYWluPiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7O1NBQUEsSUFBQUEsY0FBQSxDQUFBQyxNQUFBLEVBQUFELGNBQUEsQ0FBQUUsUUFBQTtJQUFBQyxRQUFBLE9BQUFILGNBQUEsQ0FBQUMsTUFBQTtNQUFBRSxRQUFBLEdBQUssSUFBQUgsY0FBQSxDQUFBQyxNQUFBLEVBQUFHLFdBQUEsQ0FBQUMsRUFBQTtRQUFBRixRQUFBLEVBQUM7TUFBRSxHQUFBRyxTQUFBO1FBQUFDLFFBQUE7UUFBQUMsVUFBQTtRQUFBQyxZQUFBO01BQUEsUUFBQyxLQUFDO0lBQUEsR0FBQUgsU0FBQTtNQUFBQyxRQUFBO01BQUFDLFVBQUE7TUFBQUMsWUFBQTtJQUFBLE9BQUssQ0FBQyxRQUVoQixJQUFBVCxjQUFBLENBQUFDLE1BQUE7TUFBQUUsUUFBQSxFQUNFLElBQUFILGNBQUEsQ0FBQUMsTUFBQSxFQUFBRyxXQUFBLENBQUFNLEVBQUE7UUFBQVAsUUFBQSxFQUFFO01BQU0sR0FBQUcsU0FBQTtRQUFBQyxRQUFBO1FBQUFDLFVBQUE7UUFBQUMsWUFBQTtNQUFBLE9BQUQ7SUFBQyxHQUFBSCxTQUFBO01BQUFDLFFBQUE7TUFBQUMsVUFBQTtNQUFBQyxZQUFBO0lBQUEsT0FDTCxDQUFDLFFBRU4sSUFBQVQsY0FBQSxDQUFBQyxNQUFBO01BQUFFLFFBQUEsRUFDRSxJQUFBSCxjQUFBLENBQUFDLE1BQUE7UUFBQUUsUUFBQSxFQUVFLElBQUFILGNBQUEsQ0FBQUMsTUFBQSxFQUFBRyxXQUFBLENBQUFNLEVBQUE7VUFBQVAsUUFBQSxFQUFFO1FBQVksR0FBQUcsU0FBQTtVQUFBQyxRQUFBO1VBQUFDLFVBQUE7VUFBQUMsWUFBQTtRQUFBLE9BQUQ7TUFBQyxHQUFBSCxTQUFBO1FBQUFDLFFBQUE7UUFBQUMsVUFBQTtRQUFBQyxZQUFBO01BQUEsT0FFWDtJQUFDLEdBQUFILFNBQUE7TUFBQUMsUUFBQTtNQUFBQyxVQUFBO01BQUFDLFlBQUE7SUFBQSxPQUNGLENBQUM7RUFBQSxHQUFBSCxTQUFBO0lBQUFDLFFBQUE7SUFBQUMsVUFBQTtJQUFBQyxZQUFBO0VBQUEsT0FBRCxDQUFDO0FBQUE7QUFBQSxTQUFBRSxXQUFBQyxLQUFBO0VBQUE7SUFBQUMsT0FBQSxFQUFBQztFQUFBLElBQUFGLEtBQUEsQ0FBQUcsVUFBQTtFQUFBLE9BQUFELFNBQUEsT0FBQWQsY0FBQSxDQUFBQyxNQUFBLEVBQUFhLFNBQUEsRUFBQUUsTUFBQSxDQUFBQyxNQUFBLEtBQUFMLEtBQUE7SUFBQVQsUUFBQSxNQUFBSCxjQUFBLENBQUFDLE1BQUEsRUFBQWlCLGlCQUFBLEVBQUFOLEtBQUEsRUFBQU4sU0FBQTtNQUFBQyxRQUFBO0lBQUE7RUFBQSxJQUFBRCxTQUFBO0lBQUFDLFFBQUE7RUFBQSxXQUFBVyxpQkFBQSxDQUFBTixLQUFBO0FBQUE7QUFBQSxJQUFBTyxRQUFBLEdBQUFDLE9BQUEsQ0FBQUMsT0FBQSxHQUFBVixVQUFBIn0=

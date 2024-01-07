@@ -73,13 +73,13 @@ export default MDXContent;
 `;
 
 exports[`transforms MDX code correctly via babel 1`] = `
-"/*@jsxRuntime automatic @jsxImportSource ..*/
-import {Fragment as _Fragment, jsxDEV as _jsxDEV} from \\"../jsx-dev-runtime\\";
+"import {Fragment as _Fragment, jsxDEV as _jsxDEV} from \\"../jsx-dev-runtime\\";
 function _createMdxContent(props) {
-  const _components = Object.assign({
+  const _components = {
     em: \\"em\\",
-    h1: \\"h1\\"
-  }, props.components);
+    h1: \\"h1\\",
+    ...props.components
+  };
   return _jsxDEV(_Fragment, {
     children: [_jsxDEV(\\"div\\", {
       children: [_jsxDEV(_components.em, {
@@ -130,16 +130,18 @@ function _createMdxContent(props) {
     columnNumber: 1
   }, this);
 }
-function MDXContent(props = {}) {
+export default function MDXContent(props = {}) {
   const {wrapper: MDXLayout} = props.components || ({});
-  return MDXLayout ? _jsxDEV(MDXLayout, Object.assign({}, props, {
-    children: _jsxDEV(_createMdxContent, props, undefined, false, {
+  return MDXLayout ? _jsxDEV(MDXLayout, {
+    ...props,
+    children: _jsxDEV(_createMdxContent, {
+      ...props
+    }, undefined, false, {
       fileName: \\"<source.js>\\"
     }, this)
-  }), undefined, false, {
+  }, undefined, false, {
     fileName: \\"<source.js>\\"
   }, this) : _createMdxContent(props);
 }
-export default MDXContent;
 "
 `;

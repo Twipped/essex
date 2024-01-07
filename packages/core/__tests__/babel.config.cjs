@@ -5,7 +5,7 @@ module.exports = exports = {
       "@babel/preset-env", {
         "useBuiltIns": "entry",
         "corejs": 3,
-        "modules": 'cjs',
+        "modules": false,
         "exclude": [ "transform-typeof-symbol" ],
         "targets": "maintained node versions",
       },
@@ -14,7 +14,7 @@ module.exports = exports = {
       "@babel/preset-react",
       {
         "runtime": "automatic",
-        "importSource": "../..",
+        "importSource": "essex",
         "development": true,
       },
     ],

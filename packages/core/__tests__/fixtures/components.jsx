@@ -1,5 +1,5 @@
 
-import { ContextProvider } from '../../src/context';
+import { ContextProvider } from 'essex';
 
 export function Span ({ children }) {
   return <span>{children}</span>;

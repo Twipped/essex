@@ -1,8 +1,8 @@
 import fest, { test, expect } from '@twipped/festival';
 import pDelay from '@twipped/utils/pDelay';
 import { render, jsx, Fragment, Deferred, Priority } from '../src/index.js';
-import fixtures from './fixtures/components.cjs';
-import Markdown from './fixtures/markdown.cjs';
+import * as fixtures from './fixtures/components.mjs';
+import Markdown from './fixtures/markdown.mjs';
 
 const table = [
   {
@@ -129,7 +129,7 @@ test.each(table)('$name', async (row) => {
 // }
 
 test('markdown.mdx', async () => {
-  const output = await render(Markdown.default);
+  const output = await render(Markdown);
   expect(output).toMatchSnapshot();
 });
 
