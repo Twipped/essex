@@ -14,6 +14,7 @@ exports.getComponentName = function getComponentName (type) {
 
 exports.Envelope = class Envelope {
   _resolve = null;
+
   _reject = null;
 
   constructor () {

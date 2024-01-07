@@ -1,6 +1,6 @@
+const { warn } = require('@twipped/utils');
 const { Element } = require('./element');
 const { CONTEXT } = require('./symbols');
-const { warn } = require('@twipped/utils');
 
 function createContext (name = 'Unnamed', scope = Symbol(name)) {
 
@@ -28,10 +28,15 @@ function createContext (name = 'Unnamed', scope = Symbol(name)) {
 class Context {
 
   space = 'html';
+
   name = false;
+
   fileName = false;
+
   lineNumber = false;
+
   columnNumber = false;
+
   depth = 0;
 
   constructor (config) {
@@ -102,6 +107,7 @@ class Context {
 function* prototypeParents (obj) {
   while (obj && obj !== Object.prototype) {
     yield obj;
+    // eslint-disable-next-line no-param-reassign
     obj = Object.getPrototypeOf(obj);
   }
 }

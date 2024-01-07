@@ -10,7 +10,9 @@
     "./packages/*"
   ],
   "scripts": {
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint 'packages/**/*.js'",
+    "lint-fix": "eslint --fix 'packages/**/*.js'"
   },
   "tap": {
     "coverage": false,

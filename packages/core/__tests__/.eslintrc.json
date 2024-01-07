@@ -1,21 +1,32 @@
 {
   "extends": [
-    "@twipped/eslint-config/node-cjs"
+    "@twipped/eslint-config/react",
+    "@twipped/eslint-config/test-react"
   ],
-  "rules": {
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true
-      }
-    ]
-  },
   "overrides": [
     {
-      "files": "**/**.jsx",
-      "extends": [
-        "@twipped/eslint-config/react"
-      ]
+      "files": "*.mjs",
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "rules": {
+        "import/no-nodejs-modules": "off",
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "always",
+            "mjs": "always",
+            "jsx": "always"
+          }
+        ],
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
     }
   ]
 }

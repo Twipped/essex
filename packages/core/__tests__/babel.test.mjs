@@ -1,10 +1,10 @@
-const { test } = require('tap');
+import { test, expect } from '@twipped/festival';
+import { transformAsync } from '@babel/core';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const __dirname = path.dirname((new URL(import.meta.url)).pathname);
 
-const { transformAsync } = require("@babel/core");
-const fs = require('fs/promises');
-const path = require('path');
-
-test('transforms JSX code correctly via babel', async (t) => {
+test('transforms JSX code correctly via babel', async () => {
   const fixtures = await fs.readFile(path.resolve(__dirname, 'fixtures', 'components.jsx'));
   const result = await transformAsync(fixtures, {
     babelrc: false,
@@ -28,6 +28,5 @@ test('transforms JSX code correctly via babel', async (t) => {
     ],
   });
 
-  t.snapshotFile = path.resolve(__dirname, '__snapshots__', 'babel.snap.cjs');
-  t.matchSnapshot(result.code, 'fixture');
+  expect(result.code).toMatchSnapshot();
 });

@@ -8,8 +8,8 @@
  * an async proxy function so I could get around the `import()` requirement.
  */
 
-/* eslint-disable import/extensions */
 import { isObject, isFunction, isPrimitive, isUndefinedOrNull, isString, sizeOf } from '@twipped/utils/types';
+/* eslint-disable import/extensions, no-param-reassign */
 import pMap from '@twipped/utils/pMap';
 import { htmlEscape } from 'escape-goat';
 import { format } from 'pretty-format';
@@ -20,7 +20,7 @@ import { CONTEXT, DEFER, EXCLUDE, FRAGMENT, PRIORITY, RAW } from './symbols.js';
 import { Context } from './context.js';
 import { Envelope } from './utils.js';
 
-export default async function render (element, withContext = new Context(), extendProps) {
+export default async function render (element, withContext = new Context(), extendProps = null) {
   if (isFunction(element)) {
     return render(new Element({ type: element }), withContext, extendProps);
   }
@@ -62,7 +62,7 @@ export default async function render (element, withContext = new Context(), exte
   }
 
   const shouldExclude = type[EXCLUDE] || props?.[EXCLUDE];
-  if (extendProps) props = { ...props, extendProps };
+  if (extendProps) props = { ...props, ...extendProps };
 
   // console.log({ name, shouldExclude, props });
   withContext = withContext.shard({
@@ -163,30 +163,6 @@ async function renderChildren (children, withContext) {
   for (const k of groupKeys) {
     await pMap(groups.get(k), (r) => r());
   }
-
-
-  // const pending = new Envelope();
-  // let chain = pending.promise;
-  // let leaves = [];
-  // const immediate = [];
-  // const deferred = [];
-  // for (const child of children) {
-  //   const isDeferredSibling = child[DEFER] || child.props?.[DEFER];
-  //   if (isDeferredSibling) {
-  //     chain = chain.then(() => renderChild(child, withContext));
-  //     leaves.push(chain);
-  //     deferred.push(chain);
-  //     continue;
-  //   }
-
-  //   const p = renderChild(child, withContext);
-  //   leaves.push(p);
-  //   immediate.push(p);
-  // }
-  // if (deferred.length) {
-  //   await Promise.all(immediate);
-  //   pending.resolve();
-  // }
 
   // all children should now be resolved.
   leaves = await Promise.all(leaves);

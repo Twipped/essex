@@ -4,9 +4,9 @@ class Element {
   /**
    * Unrendered JSXElement
    *
-   * @param {Object} config
+   * @param {object} config
    * @param {string|Function} config.type The name or component of the element. (Like `div`, `a`, etc.)
-   * @param {Object} config.props The properties/attributes assigned to the element.
+   * @param {object} config.props The properties/attributes assigned to the element.
    * @param {string} config.key Element key. Used only for debugging
    * @param {string} [config.fileName] Source file of the element.
    * @param {number} [config.lineNumber] Line number in the source file where the element occurs.
@@ -28,7 +28,7 @@ class Element {
 
 function cloneElement (element, config, newChildren) {
   if (!(element instanceof Element)) {
-    throw new Error('essex.cloneElement must be provided an essex Element object or descendant, but you passed ' + element);
+    throw new Error(`essex.cloneElement must be provided an essex Element object or descendant, but you passed ${element}`);
   }
   const { type, props: { ...props }, fileName, lineNumber, columNumber } = element;
 

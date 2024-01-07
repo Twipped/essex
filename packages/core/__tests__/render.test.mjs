@@ -1,11 +1,8 @@
-const { test } = require('tap');
-const { mock } = require('test');
-const { render, jsx, Fragment, Deferred, Priority } = require('..');
-const { formatTestTitle } = require('./harness.cjs');
-const fixtures = require('./fixtures/components.cjs');
-const Markdown = require('./fixtures/markdown.cjs').default;
-const path = require('path');
-const pDelay = require('@twipped/utils/pDelay').default;
+import fest, { test, expect } from '@twipped/festival';
+import pDelay from '@twipped/utils/pDelay';
+import { render, jsx, Fragment, Deferred, Priority } from '../src/index.js';
+import fixtures from './fixtures/components.cjs';
+import Markdown from './fixtures/markdown.cjs';
 
 const table = [
   {
@@ -118,57 +115,52 @@ const table = [
   },
 ];
 
-let i = 0;
-for (const row of table) {
-  i++;
-  const name = formatTestTitle('render($name)', row, i);
-  test(name, async (t) => {
-    const warn = mock.fn();
-    const output = await render(row.input, { warn });
-    t.same(output, row.expected, row.expected);
-    if (row.warnings) {
-      const actual = warn.mock.calls.map(({ arguments: [ message ] }) => message);
-      t.match(actual, row.warnings, 'got expected warnings');
-    } else {
-      t.same(warn.mock.calls, [], 'no warnings were issued');
-    }
-  });
-}
+test.each(table)('$name', async (row) => {
+  const warn = fest.fn();
+  const output = await render(row.input, { warn });
+  expect(output).toEqual(row.expected);
+  if (row.warnings) {
+    const actual = warn.mock.calls.map(([ message ]) => message);
+    expect(actual).toEqual(row.warnings);
+  } else {
+    expect(warn).not.toHaveBeenCalled();
+  }
+});
+// }
 
-test('markdown.mdx', async (t) => {
-  const output = await render(Markdown);
-  t.snapshotFile = path.resolve(__dirname, '__snapshots__', 'markdown.js.snap.cjs');
-  t.matchSnapshot(output, 'render(Markdown)');
+test('markdown.mdx', async () => {
+  const output = await render(Markdown.default);
+  expect(output).toMatchSnapshot();
 });
 
-test('thrown error in render pipeline', async (t) => {
+test('thrown error in render pipeline', async () => {
   const p = render(jsx(fixtures.DeepThrow));
-  await t.rejects(p);
-  const err = await p.catch((e) => e);
-  t.same(err.message, 'oh no!');
+  await expect(p).rejects.toThrow('oh no!');
 
-  t.match(err.stack, /<Throws>/, 'found Throws component in call stack');
+  const err = await p.catch((e) => e);
+  expect(err.stack).toMatch(/<Throws>/);
 });
 
-test('throws if given empty string as type', async (t) => {
+test('throws if given empty string as type', async () => {
   const p = render(jsx(''));
-  await t.rejects(p);
+  await expect(p).rejects.toThrow('essex.render() received an element of an unknown type: ""');
+
   const err = await p.catch((e) => e);
-  t.same(err.message, 'essex.render() received an element of an unknown type: ""', 'correct message');
-  t.same(err.stack, err.message, 'call stack is empty');
+  expect(err.stack).toEqual(err.message);
 });
 
-test('throws if given empty string as type, nested', async (t) => {
+test('throws if given empty string as type, nested', async () => {
   const p = render(jsx('a', { children: jsx('') }));
-  await t.rejects(p);
+  await expect(p).rejects.toThrow('essex.render() received an element of an unknown type: ""');
+
   const err = await p.catch((e) => e);
-  t.same(err.message, 'essex.render() received an element of an unknown type: ""', 'correct message');
-  t.same(err.stack, `${err.message}\n    in <a>`, 'trace contains the parent element');
+  // trace contains the parent element
+  expect(err.stack).toMatch(`${err.message}\n    in <a>`);
 });
 
 
-test('component stack behaves as expected', async (t) => {
-  const warn = mock.fn();
+test('component stack behaves as expected', async () => {
+  const warn = fest.fn();
   let stack;
 
   function Element (props) {
@@ -186,23 +178,22 @@ test('component stack behaves as expected', async (t) => {
 
   await render(el, { warn });
 
-  // t.matchSnapshot(result);
-  t.same(stack, [
+  expect(stack).toEqual([
     '<div>',
     '<Element>',
   ]);
 });
 
-test('deferred component', async (t) => {
-  const warn = mock.fn();
+test('deferred component', async () => {
+  const warn = fest.fn();
   const sequence = [];
 
   function ImmediateComponent ({ children, step }) {
-    sequence.push('I' + step);
+    sequence.push(`I${step}`);
     return jsx('a', { children, title: step });
   }
   function DeferredComponent ({ children, step }) {
-    sequence.push('D' + step);
+    sequence.push(`D${step}`);
     return jsx('b', { children, title: step });
   }
   DeferredComponent[Deferred] = true;
@@ -227,12 +218,13 @@ test('deferred component', async (t) => {
   });
   const output = await render(el, { warn });
 
-  t.same(sequence, [ 'I1', 'I5', 'I3', 'I4', 'I7', 'I8', 'D2', 'D6' ], 'order of execution');
-  t.same(output, '<div><a title="1"></a><b title="2"><a title="3"></a><a title="4"></a></b><a title="5"></a><b title="6"><a title="7"></a><a title="8"></a></b></div>', 'html');
+  expect(sequence).toEqual([ 'I1', 'I5', 'I3', 'I4', 'I7', 'I8', 'D2', 'D6' ]);
+  expect(output).toMatchSnapshot();
+  expect(warn).not.toHaveBeenCalled();
 });
 
-test('deferred element', async (t) => {
-  const warn = mock.fn();
+test('deferred element', async () => {
+  const warn = fest.fn();
   const sequence = [];
   async function Component ({ children, step, delay }) {
     if (delay) await pDelay(50);
@@ -260,6 +252,25 @@ test('deferred element', async (t) => {
   });
   const output = await render(el, { warn });
 
-  t.same(sequence, [ 9, 4, 6, 5, 7, 1, 3, 8, 10, 2  ], 'order of execution');
-  t.same(output, '<div><a title="1"></a><a title="2"></a><a title="3"></a><a title="4"><a title="5"></a><a title="6"></a><a title="7"></a></a><a title="8"></a><a title="9"></a><a title="10"></a></div>', 'html');
+  expect(sequence).toEqual([ 9, 4, 6, 5, 7, 1, 3, 8, 10, 2 ]);
+  expect(output).toMatchSnapshot();
+  expect(warn).not.toHaveBeenCalled();
+});
+
+test('renders a div with a style object', async () => {
+  const warn = fest.fn();
+
+  const el = jsx('div', {
+    style: {
+      fontWeight: 'bold',
+      a: {
+        textDecoration: 'none',
+      },
+    },
+  });
+
+  const result = await render(el, { warn });
+
+  expect(result).toEqual('<div style="font-weight:bold"></div>');
+  expect(warn).not.toHaveBeenCalled();
 });

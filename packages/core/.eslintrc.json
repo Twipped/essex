@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "@twipped/eslint-config/node-cjs",
+    "@twipped/eslint-config/test-node"
+  ]
+}

@@ -1,10 +1,12 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 const { Element } = require('./element');
 
 // eslint-disable-next-line no-unused-vars
 function createElement (
   type,
   props = {},
-  key,
+  key = null,
   isStaticChildren = false,
   { fileName = false, lineNumber = false, columnNumber = false } = {}
 ) {

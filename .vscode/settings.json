@@ -1,0 +1,18 @@
+{
+  /**
+   * Linting
+   */
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript"
+  ]
+  /**
+   * Other
+   */
+  "editor.rulers": [
+    100
+  ],
+  "editor.tabSize": 2
+}
