@@ -6,7 +6,7 @@ import path from 'path';
 
 const __dirname = path.dirname((new URL(import.meta.url)).pathname);
 
-test('transforms MDX code correctly via babel', async (t) => {
+test('transforms MDX code correctly via babel', async () => {
   const fixtures = await fs.readFile(path.resolve(__dirname, 'fixtures', 'markdown.mdx'));
   const result = await compile(fixtures, {
     jsxRuntime: "automatic",

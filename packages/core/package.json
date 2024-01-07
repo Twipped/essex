@@ -9,8 +9,8 @@
     "test": "node --test",
     "cover": "c8 -r html node --test && open-cli ./coverage/index.html",
     "pretest": "npm run pretest:jsx && npm run pretest:mdx",
-    "pretest:jsx": "babel ./__tests__/fixtures/*.jsx --config-file ./__tests__/babel.config.js --extensions .jsx --out-dir ./__tests__/fixtures --out-file-extension .cjs",
-    "pretest:mdx": "babel ./__tests__/fixtures/*.mdx --config-file ./__tests__/babel.config.js --extensions .mdx --out-dir ./__tests__/fixtures --out-file-extension .cjs"
+    "pretest:jsx": "babel ./__tests__/fixtures/*.jsx --config-file ./__tests__/babel.config.cjs --extensions .jsx --out-dir ./__tests__/fixtures --out-file-extension .cjs",
+    "pretest:mdx": "babel ./__tests__/fixtures/*.mdx --config-file ./__tests__/babel.config.cjs --extensions .mdx --out-dir ./__tests__/fixtures --out-file-extension .cjs"
   },
   "keywords": [],
   "author": "Jocelyn Badgley <joc@twipped.com>",

@@ -1,9 +1,15 @@
 {
   "extends": [
-    "@twipped/eslint-config/react",
+    "@twipped/eslint-config/node-cjs",
     "@twipped/eslint-config/test-react"
   ],
   "overrides": [
+    {
+      "files": "*.cjs",
+      "parserOptions": {
+        "sourceType": "script"
+      }
+    },
     {
       "files": "*.mjs",
       "parserOptions": {
