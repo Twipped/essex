@@ -28,6 +28,32 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('renders nested', async () => {
+    const warn = fest.fn();
+    const Element1 = styled('div')({
+      color: 'orange',
+    });
+
+    const Element2 = styled('div')({
+      color: 'red',
+    });
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx('div', { children: [
+          jsx(Element1),
+          ' - ',
+          jsx(Element2),
+        ],
+        }),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
   test('renders a styled styled element', async () => {
     const warn = fest.fn();
     let stack;
@@ -66,5 +92,33 @@ describe('styled components', async () => {
     ]);
   });
 
+  test('renders with a theme', async () => {
+    const warn = fest.fn();
+    const Element = styled('div')(({ theme }) => ({
+      fontWeight: 'bold',
+      a: {
+        color: theme.colors.primary,
+      },
+    }));
+
+    const testTheme = {
+      colors: {
+        primary: 'hotpink',
+      },
+    };
+
+    const el = jsx(EmotionProvider, {
+      theme: testTheme,
+      children: [
+        jsx(Element),
+        ' - ',
+        jsx(Element),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
 
 });
