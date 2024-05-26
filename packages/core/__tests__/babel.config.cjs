@@ -1,21 +1,21 @@
 module.exports = exports = {
   sourceMaps: 'inline',
-  "presets": [
+  'presets': [
     [
-      "@babel/preset-env", {
-        "useBuiltIns": "entry",
-        "corejs": 3,
-        "modules": false,
-        "exclude": [ "transform-typeof-symbol" ],
-        "targets": "maintained node versions",
+      '@babel/preset-env', {
+        'useBuiltIns': 'entry',
+        'corejs': 3,
+        'modules': false,
+        'exclude': [ 'transform-typeof-symbol' ],
+        'targets': 'maintained node versions',
       },
     ],
     [
-      "@babel/preset-react",
+      '@babel/preset-react',
       {
-        "runtime": "automatic",
-        "importSource": "essex",
-        "development": true,
+        'runtime': 'automatic',
+        'importSource': 'essex',
+        'development': true,
       },
     ],
   ],

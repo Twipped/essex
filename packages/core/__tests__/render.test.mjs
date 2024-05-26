@@ -12,7 +12,7 @@ const table = [
   },
   {
     name: '<span title="1">Hello</span>',
-    input: jsx('span', { children: 'Hello', title: "1" }),
+    input: jsx('span', { children: 'Hello', title: '1' }),
     expected: '<span title="1">Hello</span>',
   },
   {
@@ -100,13 +100,13 @@ const table = [
     input: jsx('input', { type: 'radio', download: true }),
     expected: '<input type="radio" download>',
     warnings: [
-      "The \"download\" attribute is not typically used with <input>.",
+      'The "download" attribute is not typically used with <input>.',
     ],
   },
   {
     name: 'radiobutton',
     input: jsx('div', { style: { fontWeight: 'bold' } }),
-    expected: "<div style=\"font-weight:bold\"></div>",
+    expected: '<div style="font-weight:bold"></div>',
   },
   {
     name: 'nested child arrays',

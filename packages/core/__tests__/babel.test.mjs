@@ -8,21 +8,21 @@ test('transforms JSX code correctly via babel', async () => {
   const fixtures = await fs.readFile(path.resolve(__dirname, 'fixtures', 'components.jsx'));
   const result = await transformAsync(fixtures, {
     babelrc: false,
-    "presets": [
+    'presets': [
       [
-        "@babel/preset-env", {
-          "useBuiltIns": "entry",
-          "corejs": 3,
+        '@babel/preset-env', {
+          'useBuiltIns': 'entry',
+          'corejs': 3,
           modules: 'cjs',
-          "exclude": [ "transform-typeof-symbol" ],
+          'exclude': [ 'transform-typeof-symbol' ],
         },
       ],
       [
-        "@babel/preset-react",
+        '@babel/preset-react',
         {
-          "runtime": "automatic",
-          "importSource": "..",
-          "development": true,
+          'runtime': 'automatic',
+          'importSource': '..',
+          'development': true,
         },
       ],
     ],

@@ -196,7 +196,7 @@ function invoke (fn, props, withContext) {
     const e = {}; Error.captureStackTrace(e);
     const cstack = withContext.getThrowStack();
     const control = `${e.stack}\n`.split('\n');
-    const stack = `${error.stack}\n`.split("\n");
+    const stack = `${error.stack}\n`.split('\n');
 
     const filter = new Set(control);
     const filtered = stack.filter((l) => !filter.has(l)).slice(0, -1).join('\n');

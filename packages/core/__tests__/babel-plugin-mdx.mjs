@@ -24,8 +24,8 @@ function babelParserWithMdx (value, options) {
       // Tell `@mdx-js/mdx` to return a Babel tree instead of serialized JS.
       {
         recmaPlugins: [ recmaBabel ],
-        jsxRuntime: "automatic",
-        jsxImportSource: "../..",
+        jsxRuntime: 'automatic',
+        jsxImportSource: '../..',
         development: true,
       }
     ).result;

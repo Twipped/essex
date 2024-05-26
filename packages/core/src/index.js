@@ -13,7 +13,7 @@ const { jsx, createElement } = require('./jsx-runtime');
 const { Element, cloneElement } = require('./element');
 const utils = require('./utils');
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 

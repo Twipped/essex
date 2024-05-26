@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable n/shebang */
 
 import fs from 'node:fs/promises';
@@ -24,8 +23,8 @@ const compiled = String(await compile(
     path: fname,
   },
   {
-    jsxRuntime: "automatic",
-    jsxImportSource: "essex",
+    jsxRuntime: 'automatic',
+    jsxImportSource: 'essex',
     development: true,
   }
 ));
@@ -34,13 +33,13 @@ await fs.writeFile(path.format(mjs), compiled);
 
 const commonjs = await transformAsync(compiled, {
   babelrc: false,
-  "presets": [
+  'presets': [
     [
-      "@babel/preset-env", {
-        "useBuiltIns": "entry",
-        "corejs": 3,
+      '@babel/preset-env', {
+        'useBuiltIns': 'entry',
+        'corejs': 3,
         modules: 'cjs',
-        "exclude": [ "transform-typeof-symbol" ],
+        'exclude': [ 'transform-typeof-symbol' ],
       },
     ],
   ],
