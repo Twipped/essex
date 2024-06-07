@@ -35,6 +35,19 @@ module.exports = exports = function styled (tag, options = {}) {
 
       const classes = this.emotion.attach(styles);
 
+      if (doNotForward.size) {
+        // eslint-disable-next-line no-param-reassign
+        props = Object.entries(props).reduce(
+          // eslint-disable-next-line no-return-assign
+          (o, [ key, value ]) => {
+            if (doNotForward.has(key)) return o;
+            o[key] = value;
+            return o;
+          },
+          {}
+        );
+      }
+
       return jsx(tag, {
         ...props,
         class: [

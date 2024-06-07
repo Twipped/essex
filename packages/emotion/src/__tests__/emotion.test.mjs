@@ -138,4 +138,22 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('does not forward doNotForward', async () => {
+    const warn = fest.fn();
+    const Element = styled('div', { doNotForward: [ 'color' ] })(
+      ({ color }) => ({
+        backgroundColor: color,
+      })
+    );
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx(Element, { color: 'blue' }),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
 });

@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`does not forward doNotForward 1`] = `"<style type=\\"text/css\\"></style><div class=\\"essex-0\\"></div>"`;
+
 exports[`renders a styled div 1`] = `"<style type=\\"text/css\\">.essex-d56twg{font-weight:bold;}.essex-d56twg a{-webkit-text-decoration:none;text-decoration:none;}</style><div class=\\"essex-d56twg\\"></div> - <div class=\\"essex-d56twg\\"></div>"`;
 
 exports[`renders a styled styled element 1`] = `
