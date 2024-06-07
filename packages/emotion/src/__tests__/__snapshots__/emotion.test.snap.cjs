@@ -12,4 +12,6 @@ exports[`renders nested 1`] = `
 .essex-tokvmb{color:red;}</style><div><div class=\\"essex-7kmldq\\"></div> - <div class=\\"essex-tokvmb\\"></div></div>"
 `;
 
+exports[`renders with a class label 1`] = `"<style type=\\"text/css\\">.essex-1f7rpne-MyComponent{font-weight:bold;}</style><div class=\\"essex-1f7rpne-MyComponent\\"></div>"`;
+
 exports[`renders with a theme 1`] = `"<style type=\\"text/css\\">.essex-11glsol{font-weight:bold;}.essex-11glsol a{color:hotpink;}</style><div class=\\"essex-11glsol\\"></div> - <div class=\\"essex-11glsol\\"></div>"`;

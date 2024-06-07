@@ -6,6 +6,7 @@ You can read more about this here:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences`;
 
 module.exports = exports = function styled (tag, options = {}) {
+  const doNotForward = new Set(options.doNotForward || []);
   return function createStyled (...args) {
     const styles = [];
     if (!args[0] || args[0].raw === undefined) {
@@ -21,6 +22,10 @@ module.exports = exports = function styled (tag, options = {}) {
         }
         styles.push(args[i], args[0][i]);
       }
+    }
+
+    if (options.label) {
+      styles.push(`label:${options.label};`);
     }
 
     function Styled (props) {

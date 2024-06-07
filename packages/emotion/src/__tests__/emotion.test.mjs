@@ -121,4 +121,21 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('renders with a class label', async () => {
+    const warn = fest.fn();
+    const Element = styled('div', { label: 'MyComponent' })({
+      fontWeight: 'bold',
+    });
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx(Element),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
 });
