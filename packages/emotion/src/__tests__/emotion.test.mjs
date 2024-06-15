@@ -95,12 +95,14 @@ describe('styled components', async () => {
 
   test('renders with a theme', async () => {
     const warn = fest.fn();
-    const Element = styled('div')(({ theme }) => ({
-      fontWeight: 'bold',
-      a: {
-        color: theme.colors.primary,
-      },
-    }));
+    const Element = styled('div')(
+      ({ theme }) => ({
+        fontWeight: 'bold',
+        a: {
+          color: theme.colors.primary,
+        },
+      })
+    );
 
     const testTheme = {
       colors: {
@@ -149,7 +151,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
-        jsx(Element, { color: 'blue' }),
+        jsx(Element, { color: 'fuscia' }),
       ],
     });
 
@@ -158,6 +160,54 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('passes `props`, with no styles', async () => {
+    const warn = fest.fn();
+    const Element = styled('div', {
+      props: {
+        role: 'slider',
+      },
+    })();
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx(Element),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('passes `props` to another styled component', async () => {
+    const warn = fest.fn();
+
+    const Element1 = styled('div', { doNotForward: [ 'color' ] })(
+      ({ color }) => ({
+        backgroundColor: color,
+      })
+    );
+
+    const Element2 = styled(Element1, {
+      props: {
+        color: 'purple',
+      },
+    })();
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx(Element2),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
+});
+
+describe('global styles', async () => {
   test('renders global styles', async () => {
     const warn = fest.fn();
 

@@ -75,6 +75,8 @@ module.exports = exports = EmotionProvider;
 
 function EmotionStyles () {
   const { css, nonce } = this.emotion.flatten();
+  if (!css) return null;
+
   return jsx('style', {
     type: 'text/css',
     nonce,

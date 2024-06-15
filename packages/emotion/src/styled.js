@@ -24,6 +24,8 @@ module.exports = exports = function styled (tag, options = {}) {
       }
     }
 
+    const unstyled = !styles.length;
+
     if (options.label) {
       styles.push(`label:${options.label};`);
     }
@@ -33,7 +35,7 @@ module.exports = exports = function styled (tag, options = {}) {
         throw new Error('Could not find the Emotion context provider.');
       }
 
-      const classes = this.emotion.attach(styles);
+      const classes = unstyled ? [] : this.emotion.attach(styles, props);
 
       if (doNotForward.size) {
         // eslint-disable-next-line no-param-reassign
@@ -49,6 +51,7 @@ module.exports = exports = function styled (tag, options = {}) {
       }
 
       return jsx(tag, {
+        ...options.props,
         ...props,
         class: [
           ...classes,
