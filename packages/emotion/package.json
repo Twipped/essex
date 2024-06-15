@@ -1,6 +1,6 @@
 {
   "name": "essex-emotion",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Emotion CSS styled components extension for the Essex template engine",
   "main": "src/index.js",
   "scripts": {
