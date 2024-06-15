@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`does not evaluate styles when noop 1`] = `"<div></div>"`;
+
 exports[`does not forward doNotForward 1`] = `"<style type=\\"text/css\\">.essex-1wd5wji{background-color:fuscia;}</style><div class=\\"essex-1wd5wji\\"></div>"`;
 
 exports[`passes \`props\` to another styled component 1`] = `"<style type=\\"text/css\\">.essex-1uwbsch{background-color:purple;}</style><div class=\\"essex-1uwbsch\\"></div>"`;

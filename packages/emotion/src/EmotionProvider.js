@@ -4,11 +4,12 @@ const { serializeStyles } = require('@emotion/serialize');
 
 const EmotionContext = createContext('EmotionContext', 'emotion');
 
-function EmotionProvider ({ cacheKey = 'essex', theme, children }) {
+function EmotionProvider ({ cacheKey = 'essex', theme, noop, children }) {
   const cache = createCache({ key: cacheKey });
   const pageStyles = new Set();
 
   function attach (styles, props) {
+    if (noop) return [];
     const classNames = [];
     let serialized = serializeStyles(styles, cache.registered, { ...props, theme });
     do {
@@ -28,6 +29,7 @@ function EmotionProvider ({ cacheKey = 'essex', theme, children }) {
   }
 
   function attachGlobal (styles) {
+    if (noop) return;
     const serialized = serializeStyles(styles, undefined, { theme });
 
     let serializedNames = serialized.name;

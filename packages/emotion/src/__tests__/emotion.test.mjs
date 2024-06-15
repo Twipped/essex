@@ -55,6 +55,28 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('does not evaluate styles when noop', async () => {
+    const warn = fest.fn();
+    const Element = styled('div')({
+      fontWeight: 'bold',
+      a: {
+        textDecoration: 'none',
+      },
+    });
+
+    const el = jsx(EmotionProvider, {
+      noop: true,
+      children: [
+        jsx(Element),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
+
   test('renders a styled styled element', async () => {
     const warn = fest.fn();
     let stack;
