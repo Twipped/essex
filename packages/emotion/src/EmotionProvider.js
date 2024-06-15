@@ -27,6 +27,28 @@ function EmotionProvider ({ cacheKey = 'essex', theme, children }) {
     return classNames;
   }
 
+  function attachGlobal (styles) {
+    const serialized = serializeStyles(styles, undefined, { theme });
+
+    let serializedNames = serialized.name;
+    let serializedStyles = serialized.styles;
+    let next = serialized.next;
+    while (next !== undefined) {
+      serializedNames += ` ${next.name}`;
+      serializedStyles += next.styles;
+      next = next.next;
+    }
+
+    const maybeStyles = cache.insert(
+      '',
+      { name: serializedNames, styles: serializedStyles },
+      cache.sheet,
+      false
+    );
+
+    if (maybeStyles) pageStyles.add(maybeStyles);
+  }
+
   function flatten () {
     return {
       css: Array.from(pageStyles).join('\n'),
@@ -38,6 +60,7 @@ function EmotionProvider ({ cacheKey = 'essex', theme, children }) {
     jsx(EmotionContext.Provider, {
       value: {
         attach,
+        attachGlobal,
         flatten,
       },
       children: [

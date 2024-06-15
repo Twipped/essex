@@ -3,6 +3,7 @@
 import fest, { test, expect, describe } from '@twipped/festival';
 import { render, jsx } from 'essex';
 import { styled, EmotionProvider } from '../index.js';
+import Global from '../Global.js';
 
 
 describe('styled components', async () => {
@@ -149,6 +150,43 @@ describe('styled components', async () => {
     const el = jsx(EmotionProvider, {
       children: [
         jsx(Element, { color: 'blue' }),
+      ],
+    });
+
+    const result = await render(el, { warn });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('renders global styles', async () => {
+    const warn = fest.fn();
+
+    const styles = {
+      html: {
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+        boxSizing: 'border-box',
+        WebkitTextSizeAdjust: '100%',
+      },
+      '*, *::before, *::after': { boxSizing: 'inherit' },
+      'strong, b': { fontWeight: 700 },
+      body: {
+        margin: 0,
+        color: 'rgba(0, 0, 0, 0.87)',
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontWeight: 400,
+        fontSize: '1rem',
+        lineHeight: 1.5,
+        letterSpacing: '0.00938em',
+        backgroundColor: '#fff',
+        '@media print': { backgroundColor: '#fff' },
+        '&::backdrop': { backgroundColor: '#fff' },
+      },
+    };
+
+    const el = jsx(EmotionProvider, {
+      children: [
+        jsx(Global, { styles }),
       ],
     });
 
