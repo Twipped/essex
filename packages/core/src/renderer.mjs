@@ -147,6 +147,7 @@ async function renderChildren (children, withContext) {
   // push promises of each child's result into a collection
   // that matches the sibling order.
   for (const child of children) {
+    if (isUndefinedOrNull(child)) continue;
     const priority = Number(child[PRIORITY] || child.props?.[PRIORITY] || 0);
     const e = new Envelope();
     const r = async () => e.resolve(await renderChild(child, withContext));
