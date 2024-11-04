@@ -30,7 +30,7 @@ module.exports = exports = function styled (tag, options = {}) {
       styles.push(`label:${options.label};`);
     }
 
-    function Styled (props) {
+    function Styled ({ as: asTag, ...props }) {
       if (!this.emotion) {
         throw new Error('Could not find the Emotion context provider.');
       }
@@ -50,7 +50,7 @@ module.exports = exports = function styled (tag, options = {}) {
         );
       }
 
-      return jsx(tag, {
+      return jsx(asTag || tag, {
         ...options.props,
         ...props,
         class: [

@@ -4,6 +4,17 @@ exports[`does not evaluate styles when noop 1`] = `"<div></div>"`;
 
 exports[`does not forward doNotForward 1`] = `"<style type=\\"text/css\\">.essex-1wd5wji{background-color:fuscia;}</style><div class=\\"essex-1wd5wji\\"></div>"`;
 
+exports[`multiple renders against shared cache and collection: collection 1`] = `
+Set {
+  ".essex-tokvmb{color:red;}",
+  ".essex-14ksm7b{color:blue;}",
+}
+`;
+
+exports[`multiple renders against shared cache and collection: result1 1`] = `"<div class=\\"essex-tokvmb\\"></div>"`;
+
+exports[`multiple renders against shared cache and collection: result2 1`] = `"<div class=\\"essex-14ksm7b\\"></div>"`;
+
 exports[`passes \`props\` to another styled component 1`] = `"<style type=\\"text/css\\">.essex-1uwbsch{background-color:purple;}</style><div class=\\"essex-1uwbsch\\"></div>"`;
 
 exports[`passes \`props\`, with no styles 1`] = `"<div role=\\"slider\\"></div>"`;

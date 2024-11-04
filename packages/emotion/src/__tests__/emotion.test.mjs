@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
 
 import fest, { test, expect, describe } from '@twipped/festival';
-import { render, jsx } from 'essex';
-import { styled, EmotionProvider } from '../index.js';
+import { render, jsx, Priority } from 'essex';
+import { styled, EmotionProvider, Outlet } from '../index.js';
 import Global from '../Global.js';
 
 
@@ -18,6 +18,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element),
         ' - ',
         jsx(Element),
@@ -41,6 +42,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx('div', { children: [
           jsx(Element1),
           ' - ',
@@ -76,7 +78,6 @@ describe('styled components', async () => {
     expect(result).toMatchSnapshot();
   });
 
-
   test('renders a styled styled element', async () => {
     const warn = fest.fn();
     let stack;
@@ -99,6 +100,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(StyledElement2),
       ],
     });
@@ -135,6 +137,7 @@ describe('styled components', async () => {
     const el = jsx(EmotionProvider, {
       theme: testTheme,
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element),
         ' - ',
         jsx(Element),
@@ -154,6 +157,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element),
       ],
     });
@@ -173,6 +177,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element, { color: 'fuscia' }),
       ],
     });
@@ -192,6 +197,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element),
       ],
     });
@@ -218,6 +224,7 @@ describe('styled components', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Element2),
       ],
     });
@@ -225,6 +232,44 @@ describe('styled components', async () => {
     const result = await render(el, { warn });
 
     expect(result).toMatchSnapshot();
+  });
+
+  test('multiple renders against shared cache and collection', async () => {
+    const warn = fest.fn();
+
+    const cache = EmotionProvider.createCache({ key: 'essex' });
+    const collection = new Set();
+
+    const Element1 = styled('div')({
+      color: 'red',
+    });
+
+    const Element2 = styled('div')({
+      color: 'blue',
+    });
+
+    const input1 = jsx(EmotionProvider, {
+      cache,
+      collection,
+      children: [
+        jsx(Element1),
+      ],
+    });
+
+    const input2 = jsx(EmotionProvider, {
+      cache,
+      collection,
+      children: [
+        jsx(Element2),
+      ],
+    });
+
+    const result1 = await render(input1, { warn });
+    const result2 = await render(input2, { warn });
+
+    expect(result1).toMatchSnapshot('result1');
+    expect(result2).toMatchSnapshot('result2');
+    expect(collection).toMatchSnapshot('collection');
   });
 
 });
@@ -258,6 +303,7 @@ describe('global styles', async () => {
 
     const el = jsx(EmotionProvider, {
       children: [
+        jsx(Outlet, { [Priority]: -10000 }),
         jsx(Global, { styles }),
       ],
     });

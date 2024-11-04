@@ -1,13 +1,17 @@
-const { jsx, RawHtml, createContext, Priority } = require('essex');
+const { jsx, createContext } = require('essex');
 const createCache = require('@emotion/cache').default;
 const { serializeStyles } = require('@emotion/serialize');
 
 const EmotionContext = createContext('EmotionContext', 'emotion');
 
-function EmotionProvider ({ cacheKey = 'essex', theme, noop, children }) {
-  const cache = createCache({ key: cacheKey });
-  const pageStyles = new Set();
-
+function EmotionProvider ({
+  cacheKey = 'essex',
+  cache = createCache({ key: cacheKey }),
+  collection: pageStyles = new Set(),
+  theme,
+  noop,
+  children,
+}) {
   function attach (styles, props) {
     if (noop) return [];
     const classNames = [];
@@ -65,23 +69,10 @@ function EmotionProvider ({ cacheKey = 'essex', theme, noop, children }) {
         attachGlobal,
         flatten,
       },
-      children: [
-        jsx(EmotionStyles, { [Priority]: -10000 }),
-        children,
-      ],
+      children,
     })
   );
 }
 
 module.exports = exports = EmotionProvider;
-
-function EmotionStyles () {
-  const { css, nonce } = this.emotion.flatten();
-  if (!css) return null;
-
-  return jsx('style', {
-    type: 'text/css',
-    nonce,
-    children: jsx(RawHtml, { children: css }),
-  });
-}
+exports.createCache = createCache;
