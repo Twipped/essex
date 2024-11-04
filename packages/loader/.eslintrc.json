@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "@twipped/eslint-config/node-esm",
+    "@twipped/eslint-config/test-node"
+  ]
+}
