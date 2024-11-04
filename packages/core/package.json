@@ -10,7 +10,7 @@
     "cover": "c8 -r html node --test && open-cli ./coverage/index.html",
     "pretest": "npm run pretest:jsx && npm run pretest:mdx",
     "pretest:jsx": "babel ./__tests__/fixtures/*.jsx --config-file ./__tests__/babel.config.cjs --extensions .jsx --out-dir ./__tests__/fixtures --out-file-extension .mjs",
-    "pretest:mdx": "./__tests__/convertmdx.mjs __tests__/fixtures/markdown.mdx"
+    "pretest:mdx": "node ./__tests__/convertmdx.mjs __tests__/fixtures/markdown.mdx"
   },
   "exports": {
     ".": "./src/index.js",

@@ -30,7 +30,7 @@ function _createMdxContent(props) {
       columnNumber: 1
     }, this), "\n", (0, _jsxDevRuntime.jsxDEV)("div", {
       children: (0, _jsxDevRuntime.jsxDEV)(_components.h1, {
-        children: "hello?"
+        children: "hello!"
       }, undefined, false, {
         fileName: "/Users/twipped/Projects/jayessex/packages/core/__tests__/fixtures/markdown.mdx",
         lineNumber: 4,

@@ -6,6 +6,6 @@ exports[`deferred element 1`] = `"<div><a title=\\"1\\"></a><a title=\\"2\\"></a
 
 exports[`markdown.mdx 1`] = `
 "<div><em>hi</em>?</div>
-<div><h1>hello?</h1></div>
+<div><h1>hello!</h1></div>
 <main><div><h1>how are you?</h1></div></main>"
 `;
