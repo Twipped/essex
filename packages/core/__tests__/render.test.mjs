@@ -274,3 +274,17 @@ test('renders a div with a style object', async () => {
   expect(result).toEqual('<div style="font-weight:bold"></div>');
   expect(warn).not.toHaveBeenCalled();
 });
+
+test('passes context given to render()', async () => {
+  const warn = fest.fn();
+
+  const el = jsx(fixtures.Span, {
+    children: [
+      jsx(fixtures.ContextReceiver),
+    ],
+  });
+
+  const result = await render(el, { warn, FOO: 'fie' });
+  expect(result).toEqual('<span><span>fie</span></span>');
+  expect(warn).not.toHaveBeenCalled();
+});
