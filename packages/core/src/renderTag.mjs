@@ -3,10 +3,9 @@ import { htmlEscape } from 'escape-goat';
 import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
 import { htmlElementAttributes } from 'html-element-attributes';
 import { isString, isObject, isUndefinedOrNull } from '@twipped/utils/types';
-import toStyle from '@immutabl3/to-style';
-import inlineStyle from 'inline-style';
+import renderStyle from './renderStyle.mjs';
 
-const styler = toStyle.create({ transform3d: false });
+const IS_DEV = process.env.NODE_ENV !== 'production';
 
 export default function renderTag (type, props, html, withContext) {
 
@@ -16,7 +15,7 @@ export default function renderTag (type, props, html, withContext) {
     if (isUndefinedOrNull(props[k])) continue;
     if (k === 'children') continue;
     if (k === 'style' && isObject(v)) {
-      v = inlineStyle(styler(props[k]));
+      v = renderStyle(props[k]);
     }
 
     const { attribute, value } = validateAttribute(type, k, v, withContext);
@@ -47,14 +46,18 @@ function validateAttribute (tag, attribute, value, withContext) {
   const okayForTag = (
     definition.attribute.startsWith('data-')
     || definition.attribute.startsWith('aria-')
+    || definition.attribute === 'role' // aria extension
+    || definition.attribute === 'property' // RDFa extension
     || htmlElementAttributes[tag]?.includes?.(definition.attribute)
     || htmlElementAttributes['*']?.includes?.(definition.attribute)
   );
 
-  if (!definition.space) {
-    withContext.warn(`"${attribute}" is not a recognized ${withContext.space} attribute.`);
-  } else if (!okayForTag) {
-    withContext.warn(`The "${attribute}" attribute is not typically used with <${tag}>.`);
+  if (IS_DEV) {
+    if (!definition.space) {
+      withContext.warn(`"${attribute}" is not a recognized ${withContext.space} attribute.`);
+    } else if (!okayForTag) {
+      withContext.warn(`The "${attribute}" attribute is not typically used with <${tag}>.`);
+    }
   }
   let formatted = htmlEscape(value);
   if (definition.boolean) {
