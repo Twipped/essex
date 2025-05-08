@@ -1,6 +1,6 @@
 {
   "name": "import-essex",
-  "version": "5.0.0",
+  "version": "0.1.0",
   "description": "Import JSX as essex components in NodeJS",
   "license": "MIT",
   "repository": {
