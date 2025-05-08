@@ -3,6 +3,7 @@ import { htmlEscape } from 'escape-goat';
 import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
 import { htmlElementAttributes } from 'html-element-attributes';
 import { isString, isObject, isUndefinedOrNull } from '@twipped/utils/types';
+import { merge } from '@twipped/utils';
 import renderStyle from './renderStyle.mjs';
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
@@ -29,12 +30,18 @@ export default function renderTag (type, props, html, withContext) {
   });
 }
 
+const schemas = {
+  SVG: merge({}, svgSpace, htmlSpace),
+  svg: svgSpace,
+  html: htmlSpace,
+  xml: htmlSpace,
+};
+
 function validateAttribute (tag, attribute, value, withContext) {
-  const schema = {
-    svg: svgSpace,
-    html: htmlSpace,
-    xml: htmlSpace,
-  }[withContext.space];
+  let schema = schemas[withContext.space];
+  if (tag === 'svg') {
+    schema = schemas.SVG;
+  }
 
   if (!schema) {
     withContext.warn(`Unknown tag schema space, "${withContext.space}"`);
@@ -48,12 +55,13 @@ function validateAttribute (tag, attribute, value, withContext) {
     || definition.attribute.startsWith('aria-')
     || definition.attribute === 'role' // aria extension
     || definition.attribute === 'property' // RDFa extension
+    || withContext.space !== 'html'
     || htmlElementAttributes[tag]?.includes?.(definition.attribute)
     || htmlElementAttributes['*']?.includes?.(definition.attribute)
   );
 
   if (IS_DEV) {
-    if (!definition.space) {
+    if (!definition.attribute) {
       withContext.warn(`"${attribute}" is not a recognized ${withContext.space} attribute.`);
     } else if (!okayForTag) {
       withContext.warn(`The "${attribute}" attribute is not typically used with <${tag}>.`);
