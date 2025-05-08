@@ -10,7 +10,7 @@ import findCacheDir from 'find-cache-dir';
 const __filename = (new URL(import.meta.url)).pathname;
 const __dirname = path.dirname(__filename);
 
-const cacheDirectory = findCacheDir({ name: 'import-jsx' }) || os.tmpdir();
+const cacheDirectory = findCacheDir({ name: 'import-essex' }) || os.tmpdir();
 const packageConfig = JSON.parse(readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'));
 
 export const cacheKeyFromSource = (source) => {

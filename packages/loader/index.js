@@ -16,8 +16,8 @@ export const load = async (url, _context, nextLoad) => {
   const source = result.source.toString();
 
   const useCache =
-		process.env.IMPORT_JSX_CACHE !== '0' &&
-		process.env.IMPORT_JSX_CACHE !== 'false';
+		process.env.IMPORT_ESSEX_CACHE !== '0' &&
+		process.env.IMPORT_ESSEX_CACHE !== 'false';
 
   const cacheKey = cacheKeyFromSource(source);
 
