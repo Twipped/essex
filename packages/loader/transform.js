@@ -20,16 +20,20 @@ const transform = async (source, filename) => {
       },
     ],
   ];
+  try {
+    const result = await babel.transformAsync(source, {
+      presets,
+      filename,
+      sourceMaps: 'inline',
+      babelrc: false,
+      configFile: false,
+    });
 
-  const result = await babel.transformAsync(source, {
-    presets,
-    filename,
-    sourceMaps: 'inline',
-    babelrc: false,
-    configFile: false,
-  });
-
-  return result.code;
+    return result.code;
+  } catch (e) {
+    console.error(e.message);
+    throw e;
+  }
 };
 
 export default transform;
