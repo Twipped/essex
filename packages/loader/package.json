@@ -1,6 +1,6 @@
 {
   "name": "import-essex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Import JSX as essex components in NodeJS",
   "license": "MIT",
   "repository": {
@@ -44,9 +44,7 @@
   "peerDependencies": {
     "essex": ">=0.4.0"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "prettier": {
     "tabs": true,
     "singleQuote": true,
