@@ -7,7 +7,12 @@
   },
   "eslint.validate": [
     "javascript"
-  ]
+  ],
+  "eslint.workingDirectories": [
+    {
+      "pattern": "./packages/*/"
+    }
+  ],
   /**
    * Other
    */
