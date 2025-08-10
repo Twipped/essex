@@ -132,6 +132,87 @@ function UIElement () {
 }
 ```
 
+## Render Order
 
+Essex element trees are rendered asyncronously, but that rendering is executed in a specific order,
+linearlly by their respective layers within the heirarchy. If an element is a component, then that
+component will be executed, passing in any child elements provided beneath it. None of those children
+will be rendered unless they are returned by the component. After the component executes, Essex will
+then render any JSX elements the component returned, in order that they were received.
+If an element is just an html tag, then the children will be rendered linerally with the tag.
+
+That's a lot to parse, so here's an example JSX tree, numbered in the order in which everything is rendered. The order is always preserved, but the functions will be executed outside of that loop. In this example,
+`Number5` returns the children it receives, `Number6` returns new children, and `Number7` returns nothing.
+
+```jsx
+<Number1>
+  <Number2>Header</Number2>
+  <Number3 />
+  <div>
+    <Number4>
+    <Number5>
+      <Number8>1</Number8>
+      <Number9>2</Number9>
+      <Number10>3</Number10>
+    </Number5>
+  </div>
+  <Number6/>
+    {/* -> */}
+      <Number11 />
+  <Number7>
+    <NeverRenders />
+  </Number7>
+</Number1>
+```
+
+There are some exceptions to this; for example, if two siblings both return children, but the first
+sibling takes longer to process an asyncronous call, then the second sibling's children may render first.
+
+```jsx
+<Number1Slow />
+  {/* -> */}
+    <Number4 />
+<Number2Fast />
+  {/* -> */}
+    <Number3 />
+```
+
+This can make working with contextual state very tricky, since a parent component may need state set
+by deep descendents in its child elements. Essex provides several tools to help control the rendering
+order, while still preserving output order.
+
+### Priority Groups
+
+The `Priority` symbol exported by essex allows for marking sibling elements for rendering ahead of or after their siblings by passing it as a prop. The default priority for all elements is 0, so you can dictate rendering order by setting it to a number higher or lower than 0.
+
+This is useful if a component needs to alter a context state before its siblings render, but must present its output after them, or if a component needs to be first in the presentation, but needs state set by another sibling.
+
+```jsx
+import { PRIORITY } from 'essex';
+
+function Component () {
+  return (
+    <>
+      <RenderMeThird {...{[Priority]:1 }} />
+      <RenderMeFirst {...{[Priority]:-1 }} />
+      <RenderMeSecond />
+    </>
+  )
+}
+
+```
+
+### Deferred Components
+
+By default all component functions receive their `children` as unrendered JSX elements, but sometimes a component needs their children to render first. In thie case, the component can be marked for deferred rendering by setting the `Deferred` symbol on its static properties. Essex will render its children before execution, and then pass in the fully rendered html when invoking the component.
+
+```jsx
+import { DEFER } from 'essex';
+
+function Component ({ children }) {
+  // `children` will contain fully rendered html
+}
+Component.Deferred = true;
+```
 
 **Further documentation TBD**
