@@ -18,7 +18,7 @@
   "type": "module",
   "exports": "./index.js",
   "engines": {
-    "node": ">=14.16"
+    "node": ">=20.12"
   },
   "scripts": {
     "test": "node --test"
@@ -42,7 +42,7 @@
     "make-dir": "^3.1.0"
   },
   "peerDependencies": {
-    "essex": ">=0.3.0"
+    "essex": ">=0.4.0"
   },
   "devDependencies": {
 
