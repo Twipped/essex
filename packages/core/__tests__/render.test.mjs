@@ -104,6 +104,16 @@ const table = [
     ],
   },
   {
+    name: '<input type="email" value="hello">',
+    input: jsx('input', { type: 'email', value: 'hello' }),
+    expected: '<input type="email" value="hello">',
+  },
+  {
+    name: '<input type="submit"> excludes value',
+    input: jsx('input', { type: 'submit', value: 'hello' }),
+    expected: '<input type="submit">',
+  },
+  {
     name: 'radiobutton',
     input: jsx('div', { style: { fontWeight: 'bold' } }),
     expected: '<div style="font-weight:bold"></div>',

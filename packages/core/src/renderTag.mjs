@@ -20,6 +20,16 @@ export default function renderTag (type, props, html, withContext) {
     }
 
     const { attribute, value } = validateAttribute(type, k, v, withContext);
+
+    if (type === 'input' && k === 'value') {
+      if (props.type === 'reset' || props.type === 'submit') {
+        // exclude value on submits
+        continue;
+      }
+      attributes[attribute] = String(v);
+      continue;
+    }
+
     attributes[attribute] = value;
   }
 
@@ -71,7 +81,13 @@ function validateAttribute (tag, attribute, value, withContext) {
   if (definition.boolean) {
     formatted = !!value;
   } else if (definition.booleanish) {
-    formatted = value ? 'true' : 'false';
+    if (typeof value === 'string') {
+      formatted = value;
+    } else if (typeof value === 'number') {
+      formatted = String(value);
+    } else {
+      formatted = value ? 'true' : 'false';
+    }
   } else if (definition.overloadedBoolean) {
     formatted = isString(value) ? htmlEscape(value) : value;
   } else if (typeof value === 'number') {
