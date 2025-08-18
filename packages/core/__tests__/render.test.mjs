@@ -273,6 +273,7 @@ test('renders a div with a style object', async () => {
   const el = jsx('div', {
     style: {
       fontWeight: 'bold',
+      display: undefined,
       a: {
         textDecoration: 'none',
       },

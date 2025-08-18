@@ -19,7 +19,9 @@ export default function renderStyle (styles) {
     }
   }
 
-  return Object.entries(style).map(([ k, v ]) => `${hyphenateStyleName(k)}:${v}`).join(';');
+  return Object.entries(style)
+    .map(([ k, v ]) => (v.length ? `${hyphenateStyleName(k)}:${v}` : ''))
+    .filter(Boolean).join(';');
 }
 
 // The below code is derived from react-dom
