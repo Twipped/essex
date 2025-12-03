@@ -16,6 +16,19 @@ You cannot use React hooks with this code, you cannot use most React components 
 
 ## Setup
 
+#### Using the Node loader
+
+An import loader has been written to make using Essex in your node apps a breeze.
+
+`npm install import-essex`
+
+Add the following to the entry point for your node application:
+
+```
+import { register } from 'node:module';
+register(import.meta.resolve('import-essex'));
+```
+
 #### Configuring for Babel
 
 Essex works seamlessly with `@babel/preset-react`, all you need to do is tell Babel how to find the JSX runtime.
