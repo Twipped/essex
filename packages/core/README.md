@@ -145,6 +145,30 @@ function UIElement () {
 }
 ```
 
+The initial context can also be provided at render time as the second argument on `render()`.
+
+```jsx
+import { render } from 'essex';
+
+function Template ({children}) {
+  const { pageTitle } = this;
+  return (
+    <>
+      <header><h1>{pageTitle}</h1></header>
+      <main>{children}</main>
+    </>
+  );
+}
+
+/* ... */
+
+const html = await render(
+  <Template><Article /></Template>,
+  { pageTitle: 'My Blog' }
+);
+
+```
+
 ## Render Order
 
 Essex element trees are rendered asyncronously, but that rendering is executed in a specific order,
