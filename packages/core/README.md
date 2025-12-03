@@ -96,7 +96,7 @@ async function MyComponent () {
   )
 }
 
-const html = render(<MyComponent />);
+const html = await render(<MyComponent />);
 ```
 
 ## Contexts
