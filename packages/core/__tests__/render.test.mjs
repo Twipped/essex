@@ -86,17 +86,17 @@ const table = [
     expected: '<span></span>',
   },
   {
-    name: '<input type="radio" checked>',
-    input: jsx('input', { type: 'radio', checked: true }),
-    expected: '<input type="radio" checked>',
+    name: '<input type="radio" value="one" checked>',
+    input: jsx('input', { type: 'radio', value: 'one', checked: true }),
+    expected: '<input type="radio" value="one" checked>',
   },
   {
-    name: '<input type="radio" checked={false}>',
-    input: jsx('input', { type: 'radio', checked: false }),
-    expected: '<input type="radio">',
+    name: '<input type="radio" value="2" checked={false}>',
+    input: jsx('input', { type: 'radio', value: 2, checked: false }),
+    expected: '<input type="radio" value="2">',
   },
   {
-    name: 'radiobutton',
+    name: 'radiobutton with bad attr',
     input: jsx('input', { type: 'radio', download: true }),
     expected: '<input type="radio" download>',
     warnings: [
@@ -104,9 +104,9 @@ const table = [
     ],
   },
   {
-    name: '<input type="email" value="hello">',
-    input: jsx('input', { type: 'email', value: 'hello' }),
-    expected: '<input type="email" value="hello">',
+    name: '<input type="email" value="hello" aria-errormessage="totp-error">',
+    input: jsx('input', { type: 'email', value: 'hello', 'ariaInvalid': undefined, 'ariaErrormessage': 'totp-error' }),
+    expected: '<input type="email" value="hello" aria-errormessage="totp-error">',
   },
   {
     name: '<input type="submit"> excludes value',
@@ -114,7 +114,7 @@ const table = [
     expected: '<input type="submit">',
   },
   {
-    name: 'radiobutton',
+    name: 'inline style',
     input: jsx('div', { style: { fontWeight: 'bold' } }),
     expected: '<div style="font-weight:bold"></div>',
   },
