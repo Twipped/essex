@@ -1,9 +1,18 @@
 import process from 'node:process';
+import { extname } from 'node:path';
 import cachedTransform, { cacheKeyFromSource } from './cache.js';
 import transform from './transform.js';
 
+const VALID_EXTENSIONS = [ '.js', '.jsx', '.cjs', '.mjs' ];
+
 export const load = async (url, _context, nextLoad) => {
-  if (!url.endsWith('.js') || url.includes('node_modules')) {
+  if (url.includes('node_modules') || url.startsWith('node:')) {
+    return nextLoad(url);
+  }
+
+  const u = new URL(url);
+  const ext = extname(u.pathname);
+  if (!VALID_EXTENSIONS.includes(ext)) {
     return nextLoad(url);
   }
 
