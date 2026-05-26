@@ -4,8 +4,8 @@ import fsp from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import makeDir from 'make-dir';
-import findCacheDir from 'find-cache-dir';
+import { makeDirectory } from 'make-dir';
+import findCacheDir from 'find-cache-directory';
 
 const __filename = (new URL(import.meta.url)).pathname;
 const __dirname = path.dirname(__filename);
@@ -47,7 +47,7 @@ const cachedTransform = async (
 
   // Make sure the directory exists.
   try {
-    await makeDir(directory);
+    await makeDirectory(directory);
   } catch (error) {
     if (fallback) {
       return cachedTransform(transform, parameters, os.tmpdir());
