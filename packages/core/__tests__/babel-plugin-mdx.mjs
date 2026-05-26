@@ -1,6 +1,6 @@
 import path from 'node:path';
 import parser from '@babel/parser';
-import estreeToBabel from 'estree-to-babel';
+import { estreeToBabel } from 'estree-to-babel';
 import { compileSync } from '@mdx-js/mdx';
 
 export default function babelPluginSyntaxMdx () {
