@@ -3,17 +3,16 @@ import { isUndefinedOrNull } from '@twipped/utils';
 export default function renderStyle (styles) {
   if (!isUndefinedOrNull(styles) && typeof styles !== 'object') {
     throw new Error(
-      'The `style` prop expects a mapping from style properties to values, ' +
-      "not a string. For example, style={{marginRight: spacing + 'em'}} when " +
-      'using JSX.'
+      'The `style` prop expects a mapping from style properties to values, '
+      + "not a string. For example, style={{marginRight: spacing + 'em'}} when "
+      + 'using JSX.'
     );
   }
 
   const style = {};
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const styleName in styles) {
-    if (styles.hasOwnProperty(styleName)) {
+    if (Object.hasOwn(styles, styleName)) {
       const value = styles[styleName];
       setValueForStyle(style, styleName, value);
     }
@@ -21,13 +20,13 @@ export default function renderStyle (styles) {
 
   return Object.entries(style)
     .map(([ k, v ]) => (v.length ? `${hyphenateStyleName(k)}:${v}` : ''))
-    .filter(Boolean).join(';');
+    .filter(Boolean)
+    .join(';');
 }
 
 // The below code is derived from react-dom
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
-
 
 const uppercasePattern = /([A-Z])/g;
 const msPattern = /^ms-/;
@@ -247,7 +246,6 @@ export const shorthandToLonghand = {
   wordWrap: [ 'overflowWrap' ],
 };
 
-
 /**
  * CSS properties which accept numbers but are not in units of "px".
  */
@@ -350,9 +348,9 @@ function setValueForStyle (style, styleName, value) {
   } else if (isCustomProperty) {
     style[styleName] = value;
   } else if (
-    typeof value === 'number' &&
-    value !== 0 &&
-    !isUnitlessNumber(styleName)
+    typeof value === 'number'
+    && value !== 0
+    && !isUnitlessNumber(styleName)
   ) {
     style[styleName] = `${value}px`; // Presumes implicit 'px' suffix for unitless numbers
   } else {
@@ -385,7 +383,7 @@ function camelize (string) {
 
 function warnHyphenatedStyleName (name) {
   if (__DEV__) {
-    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+    if (Object.hasOwn(warnedStyleNames, name) && warnedStyleNames[name]) {
       return;
     }
 
@@ -403,7 +401,7 @@ function warnHyphenatedStyleName (name) {
 
 function warnBadVendoredStyleName (name) {
   if (__DEV__) {
-    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+    if (Object.hasOwn(warnedStyleNames, name) && warnedStyleNames[name]) {
       return;
     }
 
@@ -418,14 +416,14 @@ function warnBadVendoredStyleName (name) {
 
 function warnStyleValueWithSemicolon (name, value) {
   if (__DEV__) {
-    if (warnedStyleValues.hasOwnProperty(value) && warnedStyleValues[value]) {
+    if (Object.hasOwn(warnedStyleValues, value) && warnedStyleValues[value]) {
       return;
     }
 
     warnedStyleValues[value] = true;
     console.error(
-      "Style property values shouldn't contain a semicolon. " +
-      'Try "%s: %s" instead.',
+      "Style property values shouldn't contain a semicolon. "
+      + 'Try "%s: %s" instead.',
       name,
       value.replace(badStyleValueWithSemicolonPattern, '')
     );

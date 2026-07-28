@@ -1,4 +1,5 @@
 const { isFunction, isString } = require('@twipped/utils/types');
+
 const { FRAGMENT, CONTEXT } = require('./symbols');
 
 exports.getComponentName = function getComponentName (type) {
@@ -25,12 +26,10 @@ exports.Envelope = class Envelope {
   }
 
   then (...args) {
-    // eslint-disable-next-line promise/catch-or-return
     this.promise.then(...args);
   }
 
   catch (...args) {
     this.promise.catch(...args);
   }
-
 };

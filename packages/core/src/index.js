@@ -1,5 +1,6 @@
-
 const { Context, createContext } = require('./context');
+const { Element, cloneElement } = require('./element');
+const { jsx, createElement } = require('./jsx-runtime');
 const render = require('./render');
 const {
   FRAGMENT: Fragment,
@@ -9,8 +10,6 @@ const {
   PRIORITY: Priority,
   EXCLUDE,
 } = require('./symbols');
-const { jsx, createElement } = require('./jsx-runtime');
-const { Element, cloneElement } = require('./element');
 const utils = require('./utils');
 
 Object.defineProperty(exports, '__esModule', {

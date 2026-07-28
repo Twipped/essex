@@ -36,37 +36,13 @@
     "import"
   ],
   "dependencies": {
-    "@babel/core": "^7.29.7",
-    "@babel/preset-react": "^7.29.7",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-react": "^8.0.1",
     "find-cache-directory": "^6.0.0",
     "make-dir": "^5.1.0"
   },
   "peerDependencies": {
     "essex": ">=0.4.0"
   },
-  "devDependencies": {},
-  "prettier": {
-    "tabs": true,
-    "singleQuote": true,
-    "trailingComma": "none",
-    "bracketSpacing": false,
-    "arrowParens": "avoid"
-  },
-  "xo": {
-    "prettier": true,
-    "parser": "@babel/eslint-parser",
-    "parserOptions": {
-      "requireConfigFile": false,
-      "babelOptions": {
-        "parserOpts": {
-          "plugins": [
-            "importAssertions"
-          ]
-        }
-      }
-    },
-    "ignore": [
-      "test/fixtures"
-    ]
-  }
+  "devDependencies": {}
 }

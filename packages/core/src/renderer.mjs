@@ -8,16 +8,15 @@
  * an async proxy function so I could get around the `import()` requirement.
  */
 
-import { isObject, isFunction, isPrimitive, isUndefinedOrNull, isString, sizeOf } from '@twipped/utils/types';
-/* eslint-disable import/extensions, no-param-reassign */
 import pMap from '@twipped/utils/pMap';
+import { isObject, isFunction, isPrimitive, isUndefinedOrNull, isString, sizeOf } from '@twipped/utils/types';
 import { htmlEscape } from 'escape-goat';
 import { format } from 'pretty-format';
-import renderTag from './renderTag.mjs';
 
-import { Element } from './element.js';
-import { CONTEXT, DEFER, EXCLUDE, FRAGMENT, PRIORITY, RAW } from './symbols.js';
 import { Context } from './context.js';
+import { Element } from './element.js';
+import renderTag from './renderTag.mjs';
+import { CONTEXT, DEFER, EXCLUDE, FRAGMENT, PRIORITY, RAW } from './symbols.js';
 import { Envelope } from './utils.js';
 
 export default async function render (element, withContext = new Context(), extendProps = null) {
@@ -170,7 +169,6 @@ async function renderChildren (children, withContext) {
 
   return leaves.flat(Infinity).filter(Boolean).join('');
 }
-
 
 async function renderChild (child, withContext) {
   if (isUndefinedOrNull(child) || child === false) return '';

@@ -1,9 +1,9 @@
 const { warn } = require('@twipped/utils');
+
 const { Element } = require('./element');
 const { CONTEXT } = require('./symbols');
 
 function createContext (name = 'Unnamed', scope = Symbol(name)) {
-
   function Provider ({ value, key, children }) {
     const el = new Element({
       type: CONTEXT,
@@ -26,7 +26,6 @@ function createContext (name = 'Unnamed', scope = Symbol(name)) {
 }
 
 class Context {
-
   space = 'html';
 
   name = false;
@@ -80,8 +79,7 @@ class Context {
         if (!name) return null;
         if (fileName === false) return `    in <${name}>`;
         return `    in <${name}> (${fileName}:${lineNumber}:${columnNumber})`;
-      }
-    ).filter(Boolean).join('\n');
+      }).filter(Boolean).join('\n');
   }
 
   getCallStack () {
@@ -97,8 +95,7 @@ class Context {
         if (!name || isSymbolTag || shouldExclude) return null;
         if (fileName === false) return `<${name}>`;
         return `<${name}> (${fileName}:${lineNumber}:${columnNumber})`;
-      }
-    ).filter(Boolean);
+      }).filter(Boolean);
     stack.reverse();
     return stack;
   }
@@ -107,7 +104,7 @@ class Context {
 function* prototypeParents (obj) {
   while (obj && obj !== Object.prototype) {
     yield obj;
-    // eslint-disable-next-line no-param-reassign
+
     obj = Object.getPrototypeOf(obj);
   }
 }
@@ -115,4 +112,3 @@ function* prototypeParents (obj) {
 exports.createContext = createContext;
 exports.Context = Context;
 exports.ContextProvider = CONTEXT;
-

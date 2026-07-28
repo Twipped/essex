@@ -1,5 +1,6 @@
 import fest, { test, expect } from '@twipped/festival';
 import pDelay from '@twipped/utils/pDelay';
+
 import { render, jsx, Fragment, Deferred, Priority } from '../src/index.js';
 import * as fixtures from './fixtures/components.mjs';
 import Markdown from './fixtures/markdown.mjs';
@@ -105,7 +106,7 @@ const table = [
   },
   {
     name: '<input type="email" value="hello" aria-errormessage="totp-error">',
-    input: jsx('input', { type: 'email', value: 'hello', 'ariaInvalid': undefined, 'ariaErrormessage': 'totp-error' }),
+    input: jsx('input', { type: 'email', value: 'hello', ariaInvalid: undefined, ariaErrormessage: 'totp-error' }),
     expected: '<input type="email" value="hello" aria-errormessage="totp-error">',
   },
   {
@@ -117,6 +118,16 @@ const table = [
     name: 'inline style',
     input: jsx('div', { style: { fontWeight: 'bold' } }),
     expected: '<div style="font-weight:bold"></div>',
+  },
+  {
+    name: 'css with single quotes',
+    input: jsx('div', { style: { backgroundImage: `url('foo.png')` } }),
+    expected: '<div style="background-image:url(\'foo.png\')"></div>',
+  },
+  {
+    name: 'css with double quotes produces entities',
+    input: jsx('div', { style: { backgroundImage: `url("foo.png")` } }),
+    expected: '<div style="background-image:url(&quot;foo.png&quot;)"></div>',
   },
   {
     name: 'nested child arrays',
@@ -168,7 +179,6 @@ test('throws if given empty string as type, nested', async () => {
   expect(err.stack).toMatch(`${err.message}\n    in <a>`);
 });
 
-
 test('component stack behaves as expected', async () => {
   const warn = fest.fn();
   let stack;
@@ -211,11 +221,13 @@ test('deferred component', async () => {
   const el = jsx('div', {
     children: [
       jsx(ImmediateComponent, { step: 1 }),
-      jsx(DeferredComponent, { step: 2,
+      jsx(DeferredComponent, {
+        step: 2,
         children: [
           jsx(ImmediateComponent, { step: 3 }),
           jsx(ImmediateComponent, { step: 4 }),
-        ] }),
+        ],
+      }),
       jsx(ImmediateComponent, { step: 5 }),
       jsx(DeferredComponent, {
         step: 6,
@@ -247,14 +259,16 @@ test('deferred element', async () => {
       jsx(Component, { step: 1 }),
       jsx(Component, { step: 2, [Priority]: -1 }),
       jsx(Component, { step: 3 }),
-      jsx(Component, { step: 4,
+      jsx(Component, {
+        step: 4,
         [Priority]: 1,
         delay: true,
         children: [
           jsx(Component, { step: 5 }),
           jsx(Component, { step: 6, [Priority]: true }),
           jsx(Component, { step: 7 }),
-        ] }),
+        ],
+      }),
       jsx(Component, { step: 8 }),
       jsx(Component, { step: 9, [Priority]: 5 }),
       jsx(Component, { step: 10 }),

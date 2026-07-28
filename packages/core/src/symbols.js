@@ -1,4 +1,3 @@
-
 exports.CONTEXT = Symbol.for('essex.context');
 
 exports.FRAGMENT = Symbol.for('essex.fragment');

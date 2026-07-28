@@ -22,8 +22,6 @@ class Element {
       || getComponentName(this.type, this)
     );
   }
-
-
 }
 
 function cloneElement (element, config, newChildren) {

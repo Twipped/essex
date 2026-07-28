@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-
 let renderer;
 module.exports = exports = async function (...args) {
   if (!renderer) {

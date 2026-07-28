@@ -1,9 +1,7 @@
-/* eslint-disable n/shebang */
-
+import { transformAsync } from '@babel/core';
+import { compile } from '@mdx-js/mdx';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { compile } from '@mdx-js/mdx';
-import { transformAsync } from '@babel/core';
 
 const fname = path.resolve(process.argv[2]);
 
@@ -26,6 +24,7 @@ const compiled = String(await compile(
     jsxRuntime: 'automatic',
     jsxImportSource: 'essex',
     development: true,
+    developmentSourceSelf: true,
   }
 ));
 
@@ -33,13 +32,12 @@ await fs.writeFile(path.format(mjs), compiled);
 
 const commonjs = await transformAsync(compiled, {
   babelrc: false,
-  'presets': [
+  presets: [
     [
       '@babel/preset-env', {
-        'useBuiltIns': 'entry',
-        'corejs': 3,
+        corejs: 3,
         modules: 'cjs',
-        'exclude': [ 'transform-typeof-symbol' ],
+        exclude: [ 'transform-typeof-symbol' ],
       },
     ],
   ],

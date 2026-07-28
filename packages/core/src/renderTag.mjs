@@ -1,23 +1,20 @@
+import { merge } from '@twipped/utils';
+import { isString, isObject, isUndefinedOrNull } from '@twipped/utils/types';
 import createHtmlElement from 'create-html-element';
 import { htmlEscape } from 'escape-goat';
-import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
 import { htmlElementAttributes } from 'html-element-attributes';
-import { isString, isObject, isUndefinedOrNull } from '@twipped/utils/types';
-import { merge } from '@twipped/utils';
+import { html as htmlSpace, svg as svgSpace, find as findAttribute } from 'property-information';
+
 import renderStyle from './renderStyle.mjs';
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
 export default function renderTag (type, props, html, withContext) {
-
   const attributes = {};
   for (const k of Object.keys(props)) {
-    let v = props[k];
+    const v = props[k];
     if (isUndefinedOrNull(props[k])) continue;
     if (k === 'children') continue;
-    if (k === 'style' && isObject(v)) {
-      v = renderStyle(props[k]);
-    }
 
     const { attribute, value } = validateAttribute(type, k, v, withContext);
 
@@ -100,6 +97,14 @@ function validateAttribute (tag, attribute, value, withContext) {
       formatted = formatted.join(' ');
     } else if (definition.commaSeparated || definition.commaOrSpaceSeparated) {
       formatted = formatted.join(',');
+    }
+  }
+
+  if (definition.property === 'style') {
+    if (isObject(value)) {
+      formatted = renderStyle(value);
+    } else {
+      formatted = String(value);
     }
   }
 
