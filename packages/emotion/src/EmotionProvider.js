@@ -1,6 +1,6 @@
-const { jsx, createContext } = require('essex');
 const createCache = require('@emotion/cache').default;
 const { serializeStyles } = require('@emotion/serialize');
+const { jsx, createContext } = require('essex');
 
 const EmotionContext = createContext('EmotionContext', 'emotion');
 

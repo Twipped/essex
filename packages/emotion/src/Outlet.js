@@ -11,5 +11,4 @@ function Outlet () {
   });
 }
 
-
 module.exports = exports = Outlet;

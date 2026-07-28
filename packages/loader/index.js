@@ -1,5 +1,6 @@
-import process from 'node:process';
 import { extname } from 'node:path';
+import process from 'node:process';
+
 import cachedTransform, { cacheKeyFromSource } from './cache.js';
 import transform from './transform.js';
 
@@ -24,9 +25,10 @@ export const load = async (url, _context, nextLoad) => {
 
   const source = result.source.toString();
 
-  const useCache =
-		process.env.IMPORT_ESSEX_CACHE !== '0' &&
-		process.env.IMPORT_ESSEX_CACHE !== 'false';
+  const useCache = (
+    process.env.IMPORT_ESSEX_CACHE !== '0'
+    && process.env.IMPORT_ESSEX_CACHE !== 'false'
+  );
 
   const cacheKey = cacheKeyFromSource(source);
 

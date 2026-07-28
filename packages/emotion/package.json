@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "Emotion CSS styled components extension for the Essex template engine",
   "main": "src/index.js",
+  "type": "commonjs",
   "scripts": {
     "lint": "eslint src",
     "test": "node --test",
@@ -24,7 +25,7 @@
     "README.md"
   ],
   "devDependencies": {
-    "@twipped/eslint-config": "^9.0.0",
+    "@twipped/eslint-config": "^9.0.1",
     "@twipped/festival": "^0.2.1",
     "c8": "^12.0.0",
     "eslint": "^9.39.5",

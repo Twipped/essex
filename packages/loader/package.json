@@ -21,7 +21,8 @@
     "node": ">=20.12"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "lint": "eslint ."
   },
   "files": [
     "index.js",
@@ -44,5 +45,8 @@
   "peerDependencies": {
     "essex": ">=0.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@twipped/eslint-config": "^9.0.1",
+    "eslint": "^9.39.5"
+  }
 }

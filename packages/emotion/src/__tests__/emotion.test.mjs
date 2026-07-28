@@ -1,10 +1,8 @@
-/* eslint-disable no-shadow */
-
 import fest, { test, expect, describe } from '@twipped/festival';
 import { render, jsx, Priority } from 'essex';
-import { styled, EmotionProvider, Outlet } from '../index.js';
-import Global from '../Global.js';
 
+import Global from '../Global.js';
+import { styled, EmotionProvider, Outlet } from '../index.js';
 
 describe('styled components', async () => {
   test('renders a styled div', async () => {
@@ -43,11 +41,12 @@ describe('styled components', async () => {
     const el = jsx(EmotionProvider, {
       children: [
         jsx(Outlet, { [Priority]: -10000 }),
-        jsx('div', { children: [
-          jsx(Element1),
-          ' - ',
-          jsx(Element2),
-        ],
+        jsx('div', {
+          children: [
+            jsx(Element1),
+            ' - ',
+            jsx(Element2),
+          ],
         }),
       ],
     });
@@ -271,7 +270,6 @@ describe('styled components', async () => {
     expect(result2).toMatchSnapshot('result2');
     expect(collection).toMatchSnapshot('collection');
   });
-
 });
 
 describe('global styles', async () => {

@@ -11,8 +11,7 @@
   ],
   "scripts": {
     "test": "npm run test --workspaces --if-present",
-    "lint": "eslint 'packages/**/*.js'",
-    "lint-fix": "eslint --fix 'packages/**/*.js'"
+    "lint": "npm run lint --workspaces --if-present"
   },
   "tap": {
     "coverage": false,

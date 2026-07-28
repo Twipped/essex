@@ -1,6 +1,6 @@
 const EmotionProvider = require('./EmotionProvider');
-const Outlet = require('./Outlet');
 const Global = require('./Global');
+const Outlet = require('./Outlet');
 const styled = require('./styled');
 
 Object.defineProperty(exports, '__esModule', {

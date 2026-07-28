@@ -1,11 +1,11 @@
 // Based on https://github.com/babel/babel-loader/blob/15df92fafd58ec53ba88efa22de7b2cee5e65fcc/src/cache.js
+import findCacheDir from 'find-cache-directory';
+import { makeDirectory } from 'make-dir';
+import crypto from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import fsp from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import crypto from 'node:crypto';
-import { makeDirectory } from 'make-dir';
-import findCacheDir from 'find-cache-directory';
 
 const __filename = (new URL(import.meta.url)).pathname;
 const __dirname = path.dirname(__filename);
